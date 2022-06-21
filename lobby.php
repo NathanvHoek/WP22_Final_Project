@@ -18,58 +18,30 @@ $_SESSION["username"] = $_POST["username"]
 </head>
 
 <body>
-<!--Add a new player-->
-<?php
-if (isset($_POST['join-game']) && $_POST['username'] !== "" && $_POST['acatar-src'] !== "") {
-    // Read articles
-    $json_file = file_get_contents("data/player_data.json");
-    $players = json_decode($json_file, true);
-    $player_one = $players[0];
-
-
-    $players[] = [
-        'player_id' => 4,
-        'player_name' => $_POST["username"],
-        "player_avatar" => $_POST["avatar-src"],
-        "player_dealer" => false,
-        "player_imager" => false,
-        'player_images' => [],
-    ];
-
-    // Save to external file
-    $json_file = fopen('data/player_data.json', 'w');
-    fwrite($json_file, json_encode($players));
-    fclose($json_file);
-}
-//    // Redirect to homepage
-//    header("Location: ../lobby.php");
-//    die();
-//}
-?>
-
 
 <div class="container">
-    <div class="head">
-        <h1>These are all the players: Welcome <?php echo $_SESSION["username"];?></h1>
-    </div>
+    <?php include 'tpl/header.php'; ?>
 
     <div class="add-player">
+
         <div id="welcome-player">
-            Hello there
+            Hello there <?= $_POST["username"] ?>
         </div>
+
         <div id="player-form">
-            <form action="" method="post">
+            <form id="add-player-form">
                 <div id="choose-avatar-btn">
                     <img src="media/avatars/no_avatar.jpeg" alt="" id="avatar">
                 </div>
                 <input type="text" id="avatar-input" name="avatar-src" hidden>
                 <input type="text" name="username" id="username-input" placeholder="Type your username here">
-                <!--            <button id="avatar-button">Choose avatar</button>-->
                 <button type="submit" id="join-game" name="join-game">Join the game!</button>
             </form>
         </div>
-
     </div>
+
+
+
     <div class="avatar-select" id="avatar-overview">
         <?php
         $json_file = file_get_contents("data/images.json");

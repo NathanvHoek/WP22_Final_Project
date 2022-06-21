@@ -35,12 +35,37 @@ function hideForm(){
     })
 }
 
-// function validateUsername() {
-//     let username = $("username").val()
-//     let all_players = $.getJSON('data/player_data.json')
-// }
+function validatePlayer() {
+    let username = $("#username").val()
+    let avatar = $("")
+}
+
+
+function submitPlayerForm(){
+    $("#add-player-form").submit(function (event) {
+
+        let formData = {
+            username: $("#username-input").val(),
+            avatar: $("#avatar-input").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "./scripts/add_player.php",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        })
+
+        event.preventDefault();
+
+        setTimeout(function (){$(".player-overview").load(window.location.href + " .player-overview")}, 500)
+    });
+};
+
 
 $(function () {
+    submitPlayerForm()
     $("#avatar-overview").hide()
     showAvatarsIcon()
     chooseAvatar()

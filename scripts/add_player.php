@@ -1,31 +1,20 @@
 <?php
-if (isset($_POST['submit'])) {
 
+if (!empty($_POST['username']) && !empty($_POST['avatar'])) {
     // Read articles
     $json_file = file_get_contents("../data/player_data.json");
-    $articles = json_decode($json_file, true);
+    $players = json_decode($json_file, true);
 
-    // Generate article ID
-    $article_id = 0;
-    foreach ($articles as $key => $value){
-        $article_id = $value['id'];
-    }
-    $article_id += 1;
-
-    $articles[] = [
-        'id' => $article_id,
-        'date' => time(),
-        'title' => "New player",
-        'player_name' => "Hello",
-        'article' => "Coool"
+    $players[] = [
+        'player_id' => 4,
+        'player_name' => $_POST["username"],
+        "player_avatar" => $_POST["avatar"],
+        "is_judge" => false,
+        'player_images' => [],
     ];
 
     // Save to external file
     $json_file = fopen('../data/player_data.json', 'w');
-    fwrite($json_file, json_encode($articles));
+    fwrite($json_file, json_encode($players));
     fclose($json_file);
-
-    // Redirect to homepage
-    header("Location: ../lobby.php");
-    die();
 }

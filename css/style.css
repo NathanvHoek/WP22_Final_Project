@@ -22,8 +22,13 @@ a {
 }
 
 .head {
+  display: flex;
+  justify-content: center;
   width: 100vw;
-  background-color: aqua;
+  background-color: #00b2ff;
+  color: white;
+  padding: 25px 0px;
+  font-size: 10px;
 }
 
 .maker {
