@@ -1,0 +1,269 @@
+html, body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  font-family: 'Roboto', sans-serif;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+/*------------------*/
+
+.container {
+  height: 100vh;
+  background-color: #00b2ff;
+}
+
+.head {
+  width: 100vw;
+  background-color: aqua;
+}
+
+.maker {
+  width: 100vw;
+  background-color: purple;
+  height: 250px;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.card-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  height: 500px;
+  background: blue;
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+}
+
+.card {
+  background-color: aliceblue;
+  border: 2px solid black;
+  height: 300px;
+  width: 30%;
+}
+
+.card img {
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 100%;
+  height: 100%;
+}
+
+button {
+  width: 100px;
+  height: 70px;
+  border-radius: 20px;
+}
+
+.start-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.start-header {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.start-header h1 {
+  font-size: 60px;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+}
+
+.start-buttons * {
+  margin: 10px;
+}
+
+#start-game {
+  outline: none;
+  border: none;
+  color: black;
+  width: 150px;
+  cursor: pointer;
+}
+
+#start-game:hover{
+  background-color: beige;
+}
+
+#start-game a {
+  color: black;
+  font-family: 'Roboto', sans-serif;;
+}
+
+.player-overview {
+  position: fixed;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  width: 100vw;
+  flex-wrap: wrap;
+}
+
+.player-icon {
+  height: 95%;
+  width: 95%;
+  background-color: aquamarine;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  animation: ease-in;
+}
+
+.add-player {
+  height: 150px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+}
+
+.add-player form {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.add-player form * {
+  margin: 10px;
+}
+
+#avatar-button {
+  height: 25px;
+  width: fit-content;
+  padding: 5px 25px;
+  display: flex;
+  align-items: center;
+}
+
+#username-input {
+  height: 100px;
+  font-size: 50px;
+  width: 300px;
+  padding: 5px 25px;
+  border: none;
+  border-bottom: 3px solid white;
+  background: none;
+  color: white;
+  outline: none;
+}
+
+#username-input::placeholder {
+  color: white;
+}
+
+#join-code {
+  height: 25px;
+  width: 200px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+#join-game {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  height: 100px;
+  width: 100px;
+  padding: 10px;
+}
+
+.player-div {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  margin: 10px;
+}
+
+.scores {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.score {
+  height: 50px;
+  width: 50px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+#choose-avatar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  width: 100px;
+  background-color: lightgrey;
+  border-radius: 50%;
+  border: 5px solid white;
+  cursor: pointer;
+}
+
+.small-avatars {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 5px;
+  border: 5px solid white;
+}
+
+#avatar-overview {
+  border-radius: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: purple;
+  border: 5px solid white;
+  justify-content: space-evenly;
+  padding: 20px 30px;
+  position: fixed;
+  width: 500px;
+  height: 250px;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px; /* Negative half of height. */
+  margin-left: -250px; /* Negative half of width. */
+}
+
+#avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
