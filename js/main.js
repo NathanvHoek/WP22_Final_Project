@@ -12,6 +12,14 @@ function chooseAvatar(){
     })
 }
 
+function chooseImage(){
+    $(".judge-images .choose-picture").click(function () {
+        console.log("Hello");
+        let img_src = $(this).attr('src');
+        $("#main-image").val(img_src);
+    })
+}
+
 function startGame(){
     let player_count = $("#avatar-overview .small-avatars").children.length
     let start_button = $("#start-game a").click(function () {
@@ -38,4 +46,5 @@ $(function () {
     chooseAvatar()
     startGame()
     hideForm()
+    chooseImage()
 })

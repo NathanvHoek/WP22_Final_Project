@@ -103,6 +103,7 @@ if (isset($_POST['join-game']) && $_POST['username'] !== "" && $_POST['acatar-sr
 
 
     </div>
+    <a href="play_game.php">Go to judge</a>
 
 </div>
 
