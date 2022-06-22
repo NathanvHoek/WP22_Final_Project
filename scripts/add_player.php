@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 if (!empty($_POST['username']) && !empty($_POST['avatar'])) {
     // Read articles
     $json_file = file_get_contents("../data/player_data.json");
