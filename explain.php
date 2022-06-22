@@ -3,8 +3,6 @@ include "tpl/head.php";
 include "tpl/header.php";
 ?>
 
-
-
     <a href="index.php">Go back to start page</a>
 
 <p>Find 2 or more friends and sit around a table. If you don't have

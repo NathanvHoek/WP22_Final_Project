@@ -3,11 +3,11 @@ session_start();
 ?>
 
 <?php
-include "tpl/head.php"
+include "tpl/head.php";
+include 'tpl/header.php';
 ?>
 
 <div class="container">
-    <?php include 'tpl/header.php'; ?>
 
     <div class="add-player">
 
@@ -41,7 +41,7 @@ include "tpl/head.php"
         ?>
     </div>
 
-
+<!--    Overview with all the players, gets reloaded on submit new player -->
     <div class="player-overview">
         <?php
         $json_file = file_get_contents("data/player_data.json");
@@ -53,16 +53,14 @@ include "tpl/head.php"
             $avatar = $articles[$i]["player_avatar"];
             echo "<div class='player-div'><img src='$avatar' class='player-icon'></div><p>$player</p>";
         }
+
+        echo $_SESSION["username"];
         ?>
 
-<!--        <form action="distribute_cards.php" method="POST">-->
-<!--            <input type="hidden" name="id" value="%s" />-->
-            <button id="start-game" class="btn btn-light article_edit"><a href="distribute_cards.php"> Start the game</a></button>
-<!--        </form>-->
-<!--        --><?php //echo $_SESSION["username"] ?>
+        <button id="start-game" class="btn btn-light article_edit"><a href="game.php"> Start the game</a></button>
+
 
     </div>
-    <a href="play_game.php">Go to judge</a>
 
 </div>
 

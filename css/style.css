@@ -118,8 +118,8 @@ button {
 }
 
 .player-overview {
-  position: fixed;
-  bottom: 20px;
+  /*position: fixed;*/
+  /*bottom: 20px;*/
   display: flex;
   align-items: center;
   justify-content: center;

@@ -62,10 +62,17 @@ function submitPlayerForm(){
 };
 
 function checkUsername() {
-
+    let json_string =
+    $.getJSON("data/player_data.json", function (players){
+        let usernames = [];
+        $.each(players, function (key, val) {
+            usernames.push(key, val)
+        })
+    })
 }
 
 $(function () {
+    checkUsername()
     submitPlayerForm()
     $("#avatar-overview").hide()
     showAvatarsIcon()
