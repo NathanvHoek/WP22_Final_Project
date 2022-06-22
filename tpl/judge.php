@@ -1,35 +1,48 @@
+<?php include "header.php" ?>
 
-<?php
-if (isset($_POST['choose-image'])) {
-    // Read articles
-    $json_file = file_get_contents("data/images.json");
-    $images = json_decode($json_file, true);
+<div class="container">
 
-    $images["current_image"] = $_POST["main-image"];
+    <div class="head">
+        <h1>Hey, <?= $player_name ?>, you are the judge!</h1>
+        <img src="<?= $player_avatar ?>" alt="" id="avatar-button">
+    </div>
 
-    // Save to external file
-    $json_file = fopen('data/images.json', 'w');
-    fwrite($json_file, json_encode($images));
-    fclose($json_file);
-}
+<!--    <div class="scores" hidden>-->
+<!--        --><?php
+//        $json_file = file_get_contents("data/player_data.json");
+//        $articles = json_decode($json_file, true);
+//        foreach($articles as $player) {
+//            $player_name = $player["player_name"];
+//            $player_avatar = $player["player_avatar"];
+//            echo "<p class='score'>$player_name</p>";
+//        }
+//        ?>
+<!--    </div>-->
 
-?>
+    <div id="choose-main-image">
+        <div class="judge-images">
+            <?php
+            $json_file = file_get_contents("data/images.json");
+            $articles = json_decode($json_file, true);
+            foreach ($articles["images"] as $img) {
+                echo "<img src=media/img/$img class='choose-picture'>";
+            }
+            ?>
+        </div>
+        <div>
+            You choose:
+            Are you sure?
+        </div>
 
-<h1>You are the judge! Choose an image</h1>
-<div class="judge-images">
-    <?php
-    $json_file = file_get_contents("data/images.json");
-    $articles = json_decode($json_file, true);
-    foreach ($articles["images"] as $img) {
-        echo "<img src=media/img/$img class='choose-picture'>";
-    }
-    ?>
+        <form id="choose-main-image">
+            <input type="text" id="main-image" name="main-image" hidden>
+            <button type="submit" id="choose-image" name="choose-image">Choose image</button>
+        </form>
+    </div>
 
+    <div id="judge-overview">
+        <?php include "meme-card.php" ?>
+        <?php include "card-container.php" ?>
+    </div>
 
 </div>
-<form action="" method="post">
-    <input type="text" id="main-image" name="main-image" hidden>
-    <button type="submit" id="choose-image" name="choose-image">Choose image</button>
-</form>
-</body>
-</html>

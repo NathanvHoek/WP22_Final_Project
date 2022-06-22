@@ -1,10 +1,12 @@
+<?php include "header.php" ?>
+
 <div class="container">
 
     <div class="head">
-        <h1>Pick the best image</h1>
-        <h2>Choose an image</h2>
+        <h1>Hey, <?= $player_name ?>, you are a player!</h1>
+        <img src="<?= $player_avatar ?>" alt="" id="avatar-button">
     </div>
-    <?php echo $_SESSION["username"];?>
+
 
     <div class="scores">
         <?php
@@ -12,10 +14,12 @@
         $articles = json_decode($json_file, true);
         foreach($articles as $player) {
             $player_name = $player["player_name"];
+            $player_avatar = $player["player_avatar"];
             echo "<p class='score'>$player_name</p>";
         }
         ?>
     </div>
+
 
     <div class="maker">
         <?php
@@ -25,15 +29,15 @@
             $text = $articles["current_image"];
             echo "<img src='$text'>";
         ?>
-
-        <?php
-            $json_file = file_get_contents("data/player_data.json");
-            $articles = json_decode($json_file, true);
-            $player_name = $articles["player_name"];
-            $amount_of_players = count($articles)
-        ?>
     </div>
+
+
     <?php
+    $json_file = file_get_contents("data/player_data.json");
+    $articles = json_decode($json_file, true);
+    $player_name = $articles["player_name"];
+    $amount_of_players = count($articles);
+
     $cards = array();
     $json_file = file_get_contents("data/texts.json");
     $articles = json_decode($json_file, true);
@@ -49,6 +53,7 @@
 
     }
     ?>
+
     <div class="card-container">
         <div class="card">
             <p><?= $cards[0]?></p>
