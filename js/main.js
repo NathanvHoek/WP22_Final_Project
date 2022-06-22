@@ -56,13 +56,14 @@ function submitPlayerForm(){
             dataType: "json",
             encode: true,
         })
-
         event.preventDefault();
-
-        setTimeout(function (){$(".player-overview").load(window.location.href + " .player-overview")}, 500)
+        setTimeout(function (){$(".player-overview").load(window.location.href + " .player-overview")}, 100)
     });
 };
 
+function checkUsername() {
+
+}
 
 $(function () {
     submitPlayerForm()

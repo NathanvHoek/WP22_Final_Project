@@ -17,4 +17,6 @@ if (!empty($_POST['username']) && !empty($_POST['avatar'])) {
     $json_file = fopen('../data/player_data.json', 'w');
     fwrite($json_file, json_encode($players));
     fclose($json_file);
+
+    $_SESSION["username"] = $_POST["username"];
 }

@@ -276,7 +276,24 @@ button {
 }
 
 .judge-images {
-  display: flex;
-  overflow-x: auto;
+  overflow-y: scroll;
   border: 1px solid black;
+  height: 400px;
+  padding: 10px;
+  margin: 10px;
+
+}
+
+.judge-images img {
+  height: 200px;
+  cursor: pointer;
+}
+
+.judge-images img:hover {
+  height: 200px;
+  transform: scale(1.05);
+}
+
+.judge-images img:active {
+  height: 200px;
 }
