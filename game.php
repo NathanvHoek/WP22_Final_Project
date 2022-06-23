@@ -16,7 +16,7 @@ foreach ($players as $player) {
         }
 }
 
-$is_judge = true;
+$is_judge = false;
 $player_name = $this_player["player_name"];
 $player_avatar = $this_player["player_avatar"];
 $player_judge = $this_player["is_judge"];

@@ -14,7 +14,7 @@ include "tpl/head.php"
         <input type="text" name="join-code" id="join-code" placeholder="Enter you code here">
     </div>
 
-    <button><a href="explain.php">Game explanation</a></button>
+    <button><a href="index_test.php">Game explanation</a></button>
 </div>
 
 <script src="js/main.js"></script>

@@ -66,4 +66,6 @@
             <p><?= $cards[2]?></p>
         </div>
     </div>
+
+    <?php include "tpl/card-container.php" ?>
 </div>

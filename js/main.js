@@ -73,7 +73,7 @@ function submitMainImage(){
             encode: true,
         })
         event.preventDefault();
-        setTimeout(function (){$(".judge-main-image").load(window.location.href + " .judge-main-image")}, 100)
+        setTimeout(function (){$(".judge-main-image").load(window.location.href + " .judge-main-image")}, 10)
         $("#judge-overview").show()
         $("#choose-main-image").hide()
 

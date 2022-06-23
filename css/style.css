@@ -33,7 +33,6 @@ a {
 
 .maker {
   width: 100vw;
-  background-color: purple;
   height: 250px;
   font-size: 40px;
   display: flex;
@@ -48,15 +47,17 @@ a {
   align-items: center;
   justify-content: space-around;
   height: 400px;
-  background: red;
-  width: 100vw;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .card {
-  background-color: aliceblue;
+  background-color: purple;
+  color: white;
+  font-size: 1.4em;
   border: 2px solid black;
   height: 300px;
-  width: 30%;
+  width: 200px;
   border-radius: 10px;
   padding: 20px;
 }

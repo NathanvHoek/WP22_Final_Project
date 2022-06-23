@@ -57,7 +57,7 @@ include 'tpl/header.php';
         echo $_SESSION["username"];
         ?>
 
-        <button id="start-game" class="btn btn-light article_edit"><a href="game.php"> Start the game</a></button>
+        <button id="start-game" class="btn btn-light article_edit"><a href="distribute_cards.php"> Start the game</a></button>
 
 
     </div>
