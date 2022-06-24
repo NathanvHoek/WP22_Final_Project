@@ -7,8 +7,10 @@ include "tpl/head.php";
 include 'tpl/header.php';
 ?>
 
+<?php $lobby_room_PIN = $_SESSION["game_PIN"]?>
+
 <div class="container">
-    <h1><?= $_SESSION["game_PIN"] ?></h1>
+    <h1><?= $lobby_room_PIN ?></h1>
     <div class="add-player">
 
         <div id="welcome-player">
@@ -20,6 +22,7 @@ include 'tpl/header.php';
                 <div id="choose-avatar-btn">
                     <img src="media/avatars/no_avatar.jpeg" alt="" id="avatar">
                 </div>
+                <input type="text" id="room-pin" value="<?=$lobby_room_PIN?>" hidden>
                 <input type="text" id="avatar-input" name="avatar-src" hidden>
                 <input type="text" name="username" id="username-input" placeholder="Type your username here">
                 <button id="join-game" name="join-game">Join the game!</button>
@@ -32,7 +35,7 @@ include 'tpl/header.php';
     <div class="avatar-select" id="avatar-box">
         <div id="avatar-overview">
             <?php
-            $json_file = file_get_contents("data/images.json");
+            $json_file = file_get_contents("data/content/images.json");
             $images_json = json_decode($json_file, true);
             $images_array = $images_json["images"];
             for ($i=0; $i < count($images_array); $i++){
@@ -50,13 +53,14 @@ include 'tpl/header.php';
 <!--    Overview with all the players, gets reloaded on submit new player -->
     <div class="player-overview">
         <?php
-        $json_file = file_get_contents("data/player_data.json");
-        $articles = json_decode($json_file, true);
-        $player_name = $articles["player_name"];
-        $amount_of_players = count($articles);
+        $json_file = file_get_contents("data/game/player_data.json");
+        $all_games = json_decode($json_file, true);
+        $lobby = $all_games[$lobby_room_PIN];
+
+        $amount_of_players = count($lobby);
         for ($i=0; $i < $amount_of_players; $i++) {
-            $player = $articles[$i]["player_name"];
-            $avatar = $articles[$i]["player_avatar"];
+            $player = $lobby[$i]["player_name"];
+            $avatar = $lobby[$i]["player_avatar"];
             echo "<div class='player-div'><img src='$avatar' class='player-icon'></div><p>$player</p>";
         }
         ?>

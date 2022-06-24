@@ -12,7 +12,7 @@ $json_file_players = file_get_contents("data/player_data.json");
 $players = json_decode($json_file_players, true);
 
 // Open images file
-$json_file_cap = file_get_contents("data/texts.json");
+$json_file_cap = file_get_contents("data/captions.json");
 $captions_json = json_decode($json_file_cap, true);
 $captions = $captions_json["texts"];
 //print_r($captions_json);

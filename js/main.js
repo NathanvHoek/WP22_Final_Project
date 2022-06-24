@@ -1,4 +1,35 @@
 /////////////////////////////////////
+//////////// INDEX PAGE /////////////
+/////////////////////////////////////
+
+function toggleJoinButton(room_exists) {
+    if (room_exists){
+            $("#pin-join-button").addClass('active');
+            $("#pin-join-button").removeClass('inactive');
+            $("#pin-join-button").attr("disabled", false);
+    }
+
+    else { console.log("Not available")
+        $("#pin-join-button").addClass('inactive');
+        $("#pin-join-button").removeClass('active');
+        $("#pin-join-button").attr("disabled", true);
+    }
+}
+
+function checkPIN() {
+    let PIN = $("#join-code").val();
+    let room_exists = false;
+    $.getJSON("data/game/player_data.json", function (json) {
+       if (json[PIN]) {
+           room_exists = true;
+       }
+       toggleJoinButton(room_exists)
+    })
+
+}
+
+
+/////////////////////////////////////
 //////////// LOBBY PAGE /////////////
 /////////////////////////////////////
 
@@ -29,7 +60,6 @@ function startGame(){
         start_button.disabled = player_count < 3;
     });
 }
-
 
 // ---------- ADD PLAYER FORM ----------
 function hideForm(){
@@ -66,6 +96,7 @@ async function checkUsername() {
 function submitPlayerForm(){
     $("#add-player-form").click(function (event) {
             let formData = {
+                room_PIN: $("#room-pin").val(),
                 username: $("#username-input").val(),
                 avatar: $("#avatar-input").val()
             };
@@ -176,4 +207,29 @@ $(function () {
     chooseImage()
     selectImage()
     submitImage()
+
+    $("#join-code").keyup(function () {
+       checkPIN();
+    })
+
+    if ($("#pin-join-button").hasClass('active')){
+        $("#pin-join-button").click(function () {
+            let formData = {
+                room_PIN: $("#join-code").val(),
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "create_room.php",
+                data: formData,
+                dataType: "json",
+                encode: true,
+                success: window.location.href = "create_room.php"
+            })
+        })
+    }
+
+
+
+
 })

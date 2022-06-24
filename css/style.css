@@ -337,4 +337,6 @@ button {
   background-color: grey;
 }
 
-.car
+.active {
+  border: 3px solid green;
+}
