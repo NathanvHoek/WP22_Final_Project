@@ -257,6 +257,77 @@ button {
   border: 5px solid white;
 }
 
+.cards {
+  width: 250px;
+  height: 170px;
+  margin: 40px;
+  padding: 20px;
+  color: white;
+  font-size: large;
+  position: absolute;
+  box-shadow: 2px 2px 5px grey;
+  border-radius: 5%
+}
+
+#card1 {
+  background-color: white;
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+#card2 {
+  background-color: white;
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 2.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+#card3 {
+  background-color: white;
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+#card4 {
+  background-color: white;
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 1.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+#card5 {
+  background-color: white;
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+#card6 {
+  background-color: white;
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes shuffle {
+  25% {transform: translateX(315px);}
+  50% {transform: translateX(0px);}
+  100% {opacity: 0;}
+}
 
 
 .judge-images {

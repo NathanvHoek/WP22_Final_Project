@@ -5,6 +5,26 @@ include "tpl/header.php";
 
 <div class="container">
     <h1>Distributing the captions cards...</h1>
+    <div class="cards" id="card1">
+        <img src="/media/logo/wdym_logo_small.png" alt="card" style="width:100%">
+    </div>
+    <div class="cards" id="card2">
+        <img src="/media/logo/wdym_logo_small.png" alt="card" style="width:100%">
+    </div>
+    <div class="cards" id="card3">
+        <img src="/media/logo/wdym_logo_small.png" alt="card" style="width:100%">
+    </div>
+    <div class="cards" id="card4">
+        <img src="/media/logo/wdym_logo_small.png" alt="card" style="width:100%">
+    </div>
+    <div class="cards" id="card5">
+        <img src="/media/logo/wdym_logo_small.png" alt="card" style="width:100%">
+    </div>
+    <div class="cards" id="card6">
+        <img src="/media/logo/wdym_logo_small.png" alt="card" style="width:100%">
+    </div>
+
+
 
     <?php
 // Open player data info
