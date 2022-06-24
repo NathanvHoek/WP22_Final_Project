@@ -24,7 +24,7 @@
     <div class="maker">
         <div>
             <?php
-            $json_file = file_get_contents("data/images.json");
+            $json_file = file_get_contents("data/content/images.json");
             $articles = json_decode($json_file, true);
             $text_index = array_rand($articles["images"]);
             $text = $articles["current_image"];

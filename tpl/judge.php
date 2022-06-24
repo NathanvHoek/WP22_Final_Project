@@ -22,7 +22,7 @@
     <div id="choose-main-image">
         <div class="judge-images">
             <?php
-            $json_file = file_get_contents("data/images.json");
+            $json_file = file_get_contents("data/content/images.json");
             $articles = json_decode($json_file, true);
             foreach ($articles["images"] as $img) {
                 echo "<img src=media/img/$img class='choose-picture'>";

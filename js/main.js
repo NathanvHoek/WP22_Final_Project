@@ -70,31 +70,31 @@ function hideForm(){
     })
 }
 
-async function checkUsername() {
-    let username = $("#username-input").val()
-    let response = await fetch("data/player_data.json");
-    let players = await response.json();
-
-    for (let i = 0; i < players.length; i++) {
-        let player_name = players[i]["player_name"];
-        if (username === player_name) {
-            $("#username-input").css("border", "3px solid red");
-            return false;
-        }
-        else if (username === ""){
-            $("#username-input").css("border", "1px solid green");
-            return false;
-        }
-        // else {
-        //     $("#username-input").css("border", "1px solid green");
-        //     return true;
-        // }
-    }
-// });
-}
+// async function checkUsername() {
+//     let username = $("#username-input").val()
+//     let response = await fetch("data/player_data.json");
+//     let players = await response.json();
+//
+//     for (let i = 0; i < players.length; i++) {
+//         let player_name = players[i]["player_name"];
+//         if (username === player_name) {
+//             $("#username-input").css("border", "3px solid red");
+//             return false;
+//         }
+//         else if (username === ""){
+//             $("#username-input").css("border", "1px solid green");
+//             return false;
+//         }
+//         // else {
+//         //     $("#username-input").css("border", "1px solid green");
+//         //     return true;
+//         // }
+//     }
+// // });
+// }
 
 function submitPlayerForm(){
-    $("#add-player-form").click(function (event) {
+    $("#join-game").click(function (event) {
             let formData = {
                 room_PIN: $("#room-pin").val(),
                 username: $("#username-input").val(),
@@ -110,6 +110,7 @@ function submitPlayerForm(){
             })
 
             event.preventDefault();
+            $("#avatar-box").hide();
 
             setTimeout(function () {
                 $(".player-overview").load(window.location.href + " .player-overview")
@@ -190,18 +191,11 @@ $(function () {
         checkUsername()
     })
 
-    // if (checkUsername()) {
-        submitPlayerForm()
-    // }
-
     closeButton()
     // checkUsername()
     $("#judge-overview").hide()
     submitMainImage()
-    submitPlayerForm()
-    $("#avatar-box").hide()
-    showAvatarsIcon()
-    chooseAvatar()
+
     startGame()
     hideForm()
     chooseImage()
@@ -212,24 +206,30 @@ $(function () {
        checkPIN();
     })
 
-    if ($("#pin-join-button").hasClass('active')){
-        $("#pin-join-button").click(function () {
-            let formData = {
-                room_PIN: $("#join-code").val(),
-            };
+    // Lobby functions
+    setInterval(function () {
+        $(".player-overview").load(window.location.href + " .player-overview")}
+    , 2000);
 
-            $.ajax({
-                type: "POST",
-                url: "create_room.php",
-                data: formData,
-                dataType: "json",
-                encode: true,
-                success: window.location.href = "create_room.php"
-            })
-        })
-    }
+    submitPlayerForm()
+    $("#avatar-box").hide()
+    showAvatarsIcon()
+    chooseAvatar()
 
-
-
-
+    // if ($("#pin-join-button").hasClass('active')){
+    //     $("#pin-join-button").click(function () {
+    //         let formData = {
+    //             room_PIN: $("#join-code").val(),
+    //         };
+    //
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "create_room.php",
+    //             data: formData,
+    //             dataType: "json",
+    //             encode: true,
+    //             success: window.location.href = "create_room.php"
+    //         })
+    //     })
+    // }
 })

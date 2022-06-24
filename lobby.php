@@ -30,8 +30,6 @@ include 'tpl/header.php';
         </div>
     </div>
 
-
-
     <div class="avatar-select" id="avatar-box">
         <div id="avatar-overview">
             <?php
@@ -64,12 +62,8 @@ include 'tpl/header.php';
             echo "<div class='player-div'><img src='$avatar' class='player-icon'></div><p>$player</p>";
         }
         ?>
-
         <button id="start-game" class="btn btn-light article_edit"><a href="distribute_cards.php"> Start the game</a></button>
-
-
     </div>
-
 </div>
 
 

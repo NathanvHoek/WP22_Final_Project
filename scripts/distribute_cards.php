@@ -1,10 +1,10 @@
 <?php
 // Open player data info
-$json_file_players = file_get_contents("data/player_data.json");
+$json_file_players = file_get_contents("data/game/player_data.json");
 $players = json_decode($json_file_players, true);
 
 // Open images file
-$json_file_img = file_get_contents("data/images.json");
+$json_file_img = file_get_contents("data/content/images.json");
 $articles = json_decode($json_file_img, true);
 
 
@@ -34,7 +34,7 @@ foreach ($players as $key => $value){
     $players[$key]["player_images"] = array_replace($players[$key]["player_images"], $player_img);
 }
 
-$json_file = fopen('data/player_data.json', 'w');
+$json_file = fopen('data/game/player_data.json', 'w');
 fwrite($json_file, json_encode($players));
 fclose($json_file);
 
