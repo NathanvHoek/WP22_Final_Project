@@ -8,10 +8,11 @@ include "tpl/head.php"
     </div>
 
     <div class="start-buttons">
-        <button id="start-game"> <a href="lobby.php">Start a new game</a></button>
+        <button id="start-game"> <a href="create_room.php">Start a new game</a></button>
         <p>------ OR -----</p>
         <label for="join-code">Join a game</label>
         <input type="text" name="join-code" id="join-code" placeholder="Enter you code here">
+        <button>Join</button>
     </div>
 
     <button><a href="index_test.php">Game explanation</a></button>
