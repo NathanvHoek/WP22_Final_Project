@@ -4,13 +4,43 @@ session_start();
 
 <?php
 include "tpl/head.php";
-include 'tpl/header.php';
 ?>
 
 <?php $lobby_room_PIN = $_SESSION["game_PIN"]?>
 
-<div class="container">
-    <h1><?= $lobby_room_PIN ?></h1>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-left">
+                    <li ><a href="index_test.php">HOME</a></li>
+                    <li><a href="#services">ABOUT US</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index_test.php"">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Lobby</li>
+        </ol>
+    </nav>
+    <div class="jumbotron">
+        <div class="text-center">
+            <img src="media/logo/wdym_logo_ex_sm.png" class="rounded" alt="...">
+        </div>
+    </div>
+
+
+<div class="lobby_container">
+<!--    Lijkt niet te werken-->
+<!--    <h1>--><?//= $lobby_room_PIN ?><!--</h1>-->
     <div class="add-player">
 
         <div id="welcome-player">
@@ -24,8 +54,8 @@ include 'tpl/header.php';
                 </div>
                 <input type="text" id="room-pin" value="<?=$lobby_room_PIN?>" hidden>
                 <input type="text" id="avatar-input" name="avatar-src" hidden>
-                <input type="text" name="username" id="username-input" placeholder="Type your username here">
-                <button id="join-game" name="join-game">Join the game!</button>
+                <input type="text" name="username" id="username-input" class="form-control" placeholder="Type your username here">
+                <button id="join-game" class="btn btn-info" name="join-game">Join the game!</button>
             </form>
         </div>
     </div>

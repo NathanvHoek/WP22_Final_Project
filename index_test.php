@@ -20,15 +20,17 @@
             </button>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#about">ABOUT</a></li>
-                <li><a href="#services">SERVICES</a></li>
-                <li><a href="#portfolio">PORTFOLIO</a></li>
-                <li><a href="#pricing">PRICING</a></li>
-                <li><a href="#contact">CONTACT</a></li>
+            <ul class="nav navbar-nav navbar-left">
+                <li ><a class="navbar-active" href="#about">HOME</a></li>
+                <li><a href="#services">ABOUT US</a></li>
             </ul>
         </div>
     </div>
+</nav>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+    </ol>
 </nav>
 <div class="jumbotron">
     <div class="text-center">
