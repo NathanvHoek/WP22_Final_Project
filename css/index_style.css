@@ -10,3 +10,15 @@ form {
 #or_text {
     color: Black;
 }
+
+li {
+    font-size: 16px;
+    color: black;
+    font-weight: normal;
+}
+
+p {
+    font-size: 16px;
+    color: black;
+    font-weight: normal;
+}

@@ -1,11 +1,13 @@
 <?php
 session_start();
 if (!empty($_POST['username']) && !empty($_POST['avatar'])) {
-    // Read articles
-    $json_file = file_get_contents("../data/player_data.json");
-    $players = json_decode($json_file, true);
+    $room_PIN = $_POST["room_PIN"];
 
-    $players[] = [
+    // Read articles
+    $json_file = file_get_contents("../data/game/player_data.json");
+    $game = json_decode($json_file, true);
+
+    $game[$room_PIN][] = [
         'player_id' => 4,
         'player_name' => $_POST["username"],
         "player_avatar" => $_POST["avatar"],
@@ -14,8 +16,8 @@ if (!empty($_POST['username']) && !empty($_POST['avatar'])) {
     ];
 
     // Save to external file
-    $json_file = fopen('../data/player_data.json', 'w');
-    fwrite($json_file, json_encode($players));
+    $json_file = fopen('../data/game/player_data.json', 'w');
+    fwrite($json_file, json_encode($game));
     fclose($json_file);
 
     $_SESSION["username"] = $_POST["username"];
