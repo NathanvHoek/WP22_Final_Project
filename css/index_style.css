@@ -1,6 +1,7 @@
 .jumbotron {
     background-color: #f4f3fb ;
     color: #ffffff;
+    margin-bottom: 0px;
 }
 
 form {
@@ -21,4 +22,14 @@ p {
     font-size: 16px;
     color: black;
     font-weight: normal;
+    line-height: 200%;
+    margin-top: 20px;
 }
+
+.bg-grey {
+    background-color: #f4f3fb;
+
+.glyphicon {
+    color: red;
+}
+
