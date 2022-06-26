@@ -51,18 +51,22 @@ include 'tpl/header.php';
 <!--    Overview with all the players, gets reloaded on submit new player -->
     <div class="player-overview">
         <?php
-        $json_file = file_get_contents("data/game/player_data.json");
+        $json_file = file_get_contents("data/game/game_data.json");
         $all_games = json_decode($json_file, true);
-        $lobby = $all_games[$lobby_room_PIN];
 
-        $amount_of_players = count($lobby);
-        for ($i=0; $i < $amount_of_players; $i++) {
-            $player = $lobby[$i]["player_name"];
-            $avatar = $lobby[$i]["player_avatar"];
+        $players = $all_games[$lobby_room_PIN]["player_data"];
+
+        foreach ($players as $player => $player_info) {
+            $avatar = $player_info["player_avatar"];
             echo "<div class='player-div'><img src='$avatar' class='player-icon'></div><p>$player</p>";
         }
         ?>
-        <button id="start-game" class="btn btn-light article_edit"><a href="distribute_cards.php"> Start the game</a></button>
+
+        <form id="start-game-form" action="start_game.php" method="post">
+            <input type="text" id="join-code" value="<?= $lobby_room_PIN ?>" hidden>
+            <button id="start-game" class="btn btn-light article_edit">Start the game</button>
+        </form>
+
     </div>
 </div>
 

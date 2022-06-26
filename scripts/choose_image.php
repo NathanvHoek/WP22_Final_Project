@@ -1,14 +1,15 @@
 <?php
 
 if (!empty($_POST['main_image'])) {
-    // Read articles
-    $json_file = file_get_contents("../data/content/images.json");
-    $images = json_decode($json_file, true);
+    $json_file = file_get_contents("../data/game/game_data.json");
+    $game_data = json_decode($json_file, true);
+//    $game = $game_data[$_POST["game_PIN"]];
 
-    $images["current_image"] = $_POST["main_image"];
+//    $game = $_POST["main_image"];
+    $game_data[$_POST["game_PIN"]]["current_image"] = $_POST["main_image"];
 
     // Save to external file
-    $json_file = fopen('../data/content/images.json', 'w');
-    fwrite($json_file, json_encode($images));
+    $json_file = fopen('../data/game/game_data.json', 'w');
+    fwrite($json_file, json_encode($game_data));
     fclose($json_file);
 }

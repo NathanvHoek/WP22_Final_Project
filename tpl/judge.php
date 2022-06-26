@@ -35,6 +35,7 @@
         </div>
 
         <form id="choose-main-image">
+            <input type="text" id="game_PIN" name="game_PIN" value="<?= $_SESSION["game_PIN"] ?>" hidden>
             <input type="text" id="main-image" name="main-image" hidden>
             <button type="submit" id="choose-image" name="choose-image">Choose image</button>
         </form>
@@ -42,7 +43,32 @@
 
     <div id="judge-overview">
         <?php include "meme-card.php" ?>
-        <?php include "card-container.php" ?>
-    </div>
+        <h1>Now wait until all things come in</h1>
 
+    </div>
+    <div id="selected-captions-overview">
+        <?php
+        $json_file = file_get_contents("./data/game/game_data.json");
+        $game_data = json_decode($json_file, true);
+
+        $selected_captions = $game_data[$_SESSION["game_PIN"]]["caption_cards_submitted"];
+        $all_players = $game_data[$_SESSION["game_PIN"]]["player_data"];
+
+        if (count($selected_captions) == count($all_players)-1){
+           $game_data[$_SESSION["game_PIN"]]["round"]["status"] = "finished";
+            echo "All players have submitted their captions, now go ahead and see what they came up with";
+            echo "<div id='judge-choose-winner'>";
+            foreach ($selected_captions as $player => $caption){
+                echo "<div class='card'><p>$caption</p></div> ";
+            }
+            echo "</div>";
+        } else {
+            foreach ($selected_captions as $player => $caption){
+                echo "<div class='card'><p>$caption</p></div> ";
+            }}
+
+
+
+        ?>
+    </div>
 </div>
