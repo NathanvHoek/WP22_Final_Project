@@ -6,10 +6,11 @@ include "tpl/head.php"; ?>
 <?php
 
 if (empty($_POST["join-code"])){
-    echo "<h1>Create a room</h1>";
+    echo "<div class='header-loading'
+    <h1>Creating a room...</h1></div>";
 
     $game_PIN = mt_rand(1111111, 9999999);
-    echo $game_PIN;
+    echo "<div class='room-number'>$game_PIN</div>";
     $_SESSION["game_PIN"] = $game_PIN;
 
 
@@ -26,11 +27,14 @@ if (empty($_POST["join-code"])){
 }
 
 else {
-    echo "<h1>Join a room</h1>";
+    echo "<div class='header-loading'
+    <h1>Joining a room...</h1></div>";
     $_SESSION["game_PIN"] = $_POST["join-code"];
 }
 
 ?>
+
+<div class="loader"></div>
 
 
 
