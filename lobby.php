@@ -8,6 +8,7 @@ include "tpl/head.php";
 
 <?php $lobby_room_PIN = $_SESSION["game_PIN"]?>
 
+
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -20,7 +21,7 @@ include "tpl/head.php";
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-left">
                     <li ><a href="index_test.php">HOME</a></li>
-                    <li><a href="#services">ABOUT US</a></li>
+                    <li><a href="about.php">ABOUT</a></li>
                 </ul>
             </div>
         </div>
@@ -80,8 +81,11 @@ include "tpl/head.php";
         </div>
     </div>
 
+
 <!--    Overview with all the players, gets reloaded on submit new player -->
     <div class="player-overview">
+
+
         <?php
         $json_file = file_get_contents("data/game/player_data.json");
         $all_games = json_decode($json_file, true);
@@ -94,11 +98,25 @@ include "tpl/head.php";
             echo "<div class='player-div'><img src='$avatar' class='player-icon'></div><p>$player</p>";
         }
         ?>
-
+<!--Alles na bovenstaand stukje code wordt niet geladen.-->
         <button id="start-game" class="btn btn-light article_edit"><a href="distribute_cards.php"> Start the game</a></button>
 
     </div>
 
+</div>
+
+
+
+
+
+<div class="container-fluid">
+    <footer class="py-3 my-4">
+        <ul class="nav text-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="index_test.php" class="nav-link px-2 text-muted">Home</a></li>
+            <li class="nav-item"><a href="about.php" class="nav-link px-2 text-muted">About</a></li>
+        </ul>
+        <p class="text-center text-muted">© 2022 Copyright:Tariq Ballout, Nathan van Hoek, Simon van Loon</p>
+    </footer>
 </div>
 
 
