@@ -21,8 +21,8 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-left">
-                <li ><a class="navbar-active" href="#about">HOME</a></li>
-                <li><a href="#services">ABOUT US</a></li>
+                <li ><a class="navbar-active" href="#jumbotron">HOME</a></li>
+                <li><a href="about.php">ABOUT US</a></li>
             </ul>
         </div>
     </div>
@@ -32,7 +32,7 @@
         <li class="breadcrumb-item active" aria-current="page">Home</li>
     </ol>
 </nav>
-<div class="jumbotron">
+<div class="jumbotron" id="jumbotron">
     <div class="text-center">
         <img src="media/logo/wdym_logo_small.png" class="rounded" alt="...">
     </div>
@@ -64,7 +64,7 @@
 <div class="container-fluid bg-grey"
 <div class="row">
     <div class="col-sm-7">
-        <h2>How to play</h2>
+        <h2>Quick Rules:</h2>
         <ul>
             <li>A game of What Do You Meme requires at least 3 players.</li>
             <li>Cards are shuffled and distributed among the players.</li>
@@ -76,6 +76,58 @@
     </div>
 </div>
 </div>
+<footer class="text-center text-lg-start bg-light text-muted">
+
+
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Useful links
+                    </h6>
+                    <p>
+                        <a href="#!" class="text-reset">Pricing</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Settings</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Orders</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Help</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Contact
+                    </h6>
+                    <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+                    <p>
+                        <i class="fas fa-envelope me-3"></i>
+                        info@example.com
+                    </p>
+                    <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+                    <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+    </section>
+<div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+    © 2022 Copyright:Tariq Ballout, Nathan van Hoek, Simon van Loon
+</div>
+</footer>
 
 
 </body>
