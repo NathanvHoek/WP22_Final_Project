@@ -34,7 +34,7 @@
 </nav>
 <div class="jumbotron" id="jumbotron">
     <div class="text-center">
-        <img src="media/logo/wdym_logo_small.png" class="rounded" alt="...">
+        <img src="media/logo/wdym_logo_small.png" class="breathing" alt="...">
     </div>
     <div>
     <form class="form-inline text-center">

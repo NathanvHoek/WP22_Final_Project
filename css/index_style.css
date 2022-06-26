@@ -56,7 +56,24 @@ p {
 
 }
 
+.breathing {
+    margin: 0;
+    width: 440px;
+    height: 200px;
+    animation: breathing 3s ease-out infinite;
+}
 
+@keyframes breathing {
+    0% {
+        transform: scale(0.75, 0.75);
+    }
+    50% {
+        transform: scale(1.25, 1.25);
+    }
+    100% {
+        transform: scale(0.75, 0.75);
+    }
+}
 
 body {
     margin: 0;
