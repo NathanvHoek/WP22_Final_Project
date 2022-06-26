@@ -66,10 +66,11 @@ a {
   display: flex;
   justify-content: center;
   width: 100vw;
-  background-color: #00b2ff;
-  color: white;
+  background-color: #f4f3fb;
+  color: #bc2da4;
   padding: 25px 0px;
   font-size: 10px;
+  margin-top: 50px;
 }
 
 .maker {
