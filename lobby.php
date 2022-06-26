@@ -97,7 +97,6 @@ include "tpl/head.php";
 
         <button id="start-game" class="btn btn-light article_edit"><a href="distribute_cards.php"> Start the game</a></button>
 
-
     </div>
 
 </div>
