@@ -62,6 +62,20 @@ function selectButtonAvatar() {
     })
 }
 
+function disableButton() {
+    let input = document.querySelector("#username-input")
+    let button = document.querySelector("#join-game")
+
+    button.disabled = true
+
+    input.addEventListener("change", stateHandle)
+
+    function stateHandle() {
+        button.disabled = document.querySelector("#username-input").value === "";
+    }
+}
+
+
 function startGameButton(){
     $("#start-game").click(function () {
         $.getJSON("./data/game/game_data.json", function (json) {
@@ -94,12 +108,6 @@ function hideForm(){
 //             $("#username-input").css("border", "1px solid green");
 //             return false;
 //         }
-//         // else {
-//         //     $("#username-input").css("border", "1px solid green");
-//         //     return true;
-//         // }
-//     }
-// // });
 // }
 
 function submitPlayerForm(){
@@ -333,6 +341,8 @@ $(function () {
     $("#username-input").keyup(function () {
         checkUsername()
     });
+
+    disableButton()
 
     $("#judge-overview").hide()
 
