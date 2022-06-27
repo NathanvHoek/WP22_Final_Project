@@ -55,6 +55,10 @@ html, body {
 a {
   text-decoration: none;
 }
+
+.announce {
+  font-size: 1.5em;
+}
 /*------------------*/
 
 .lobby_container {
@@ -62,17 +66,14 @@ a {
   background-color: ghostwhite;
 }
 
-/*<<<<<<< HEAD*/
-/*=======*/
 .head {
   display: flex;
   justify-content: center;
   width: 100vw;
-  background-color: #f4f3fb;
   color: #bc2da4;
   padding: 25px 0px;
   font-size: 10px;
-  margin-top: 50px;
+  margin-bottom: 40px;
 }
 
 .maker {
@@ -330,12 +331,10 @@ a {
 /* ----------- DISTRIBUTION PAGE ---------- */
 /* ---------------------------------------- */
 
-.header {
-  display: flex;
-  justify-content: center;
-/*<<<<<<< HEAD*/
-  padding: 50px 0px;
-}
+/*.header {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*}*/
 
 
 /* CARDS ANIMATION*/
@@ -479,11 +478,11 @@ a {
   height: 50vh;
   width: 50vw;
   border-radius: 10px;
-  border: 5px solid black;
+  border: 2px solid grey;
   background: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   z-index:1;
   position: fixed;
@@ -491,10 +490,27 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
    /* Negative half of height. */
+  box-shadow: 0 0 10px grey;
+  padding: 20px;
 }
 
 #show-winner p {
   font-size: 1.1em;
+  text-align: center;
+}
+
+#next-round {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+#next-round button{
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 0 0 10px 10px;
+  height: 2.5em;
 }
 
 #winner-caption-btn {
@@ -504,25 +520,31 @@ a {
   height: 25px;
 }
 
+
+/* BOX JUDGE CHOOSES IMAGES*/
 .judge-images {
   overflow-y: scroll;
-  border: 1px solid black;
+  border: 1px solid grey;
+  border-radius: 5px;
   height: 400px;
   padding: 10px;
   margin: 10px;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   flex-wrap: wrap;
+  box-shadow: 0 0 7px black;
 }
 
 .choose-picture {
   height: 200px;
   cursor: pointer;
   margin: 10px;
+  box-shadow: 0 0 5px grey;
+
 }
 
-.choose-picture.active, .choose-picture.active:hover{
-  border: 5px solid green;
+.choose-picture.active, .choose-picture.active:hover {
+  box-shadow: 0 0 15px green;
 }
 
 #selected-update {
@@ -530,16 +552,13 @@ a {
   justify-content: center;
   align-items: center;
   margin-top: 30px;
+  font-size: 1.3em;
 }
 
 
 .choose-picture:hover {
-  height: 200px;
+  box-shadow: 0 0 10px black;
   transform: scale(1.05);
-}
-
-.choose-picture:hover {
-  border: 5px solid grey;
 }
 
 .judge-images img:active {
@@ -582,9 +601,16 @@ a {
 }
 
 
+#choose-image {
+  width: 97vw;
+  height: 2.5em;
+}
+
+
 #choice {
   display: flex;
   animation: ease-in;
+  justify-content: center;
 }
 
 #chosen-image {
@@ -631,8 +657,8 @@ a {
 
 .card p {
   color: white;
+  font-size: 1.4em;
   width: 100%;
-  background-color: #9fdfe1;
 }
 
 /*.card img {*/

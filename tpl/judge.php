@@ -18,12 +18,7 @@
          <input type="text" id="game_PIN" name="game_PIN" value="<?= $_SESSION["game_PIN"] ?>" hidden>
          <input type="text" id="main-image" name="main-image" hidden>
          <div id="choice">
-             <div id="choose-image" class="btn btn-primary" name="choose-image">Choose image</div>
-             <div id="choose-buttons">
-                 <button type="submit" id="submit-image" class="btn btn-primary">Submit this image</button>
-                 <button type="button" id="cancel" class="btn btn-danger">Cancel</button>
-             </div>
-
+             <button id="choose-image" class="btn btn-primary" name="choose-image" disabled>Choose image</button>
          </div>
 
      </form>
@@ -50,7 +45,7 @@
      $all_players = $game_data[$_SESSION["game_PIN"]]["player_data"];
 
      if (count($selected_captions) == count($all_players)-1) {
-         echo "<div id='selected-update'><p>All players have submitted their captions, now the jury decides which one is the winner</p></div>";
+         echo "<div id='selected-update'><p>All players have submitted their captions, now you decide which one is the funniest</p></div>";
          echo "<div id='all-captions-final'>";
      } else {
          echo "<div id='selected-update'><p>Not all player have submitted their captions</p></div>";

@@ -21,7 +21,7 @@
     $current_image = $game_data[$_SESSION["game_PIN"]]["round"]["round_info"][$round]["current_image"];
 
     if (empty($current_image)){
-        echo "Wait for the judge to choose a picture";
+        echo "<p class='announce'>Wait for the judge to choose a picture</p>";
     } else {
         echo "<img src='$current_image'>";
     }

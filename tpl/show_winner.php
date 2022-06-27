@@ -13,7 +13,7 @@ echo "<img src='$image'>";
 echo "<p>$winner_caption</p>"
 ?>
     <form id="next-round" action="tpl/next_round.php" method="post">
-        <button>Go to next round</button></a>
+        <button type="submit" class="btn btn-primary">Go to next round</button></a>
     </form>
 
 </div>

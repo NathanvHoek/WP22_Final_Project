@@ -13,6 +13,7 @@ function toggleJoinButton(room_exists, PIN) {
     }
 }
 
+
 function checkPIN() {
     let PIN = $("#join-code").val();
     let room_exists = false;
@@ -141,23 +142,22 @@ function submitPlayerForm(){
 
 function chooseImage(){
     $(".judge-images .choose-picture").click(function () {
-        let img_src = $(this).attr('src');
-        $(".judge-images .choose-picture").removeClass("active");
-        $(this).addClass("active");
-        $("#main-image").val(img_src);
+        if ($(this).hasClass("active")) {
+            $(this).removeClass("active");
+            $("#main-image").val("");
+            $("#choose-image").attr("disabled", true)
+        } else {
+            let img_src = $(this).attr('src');
+            $(".judge-images .choose-picture").removeClass("active");
+            $(this).addClass("active");
+            $("#main-image").val(img_src);
+            $("#choose-image").attr("disabled", false)
+        }
     })
 }
 
-function showChoice(){
-    $("#choose-buttons").hide();
-    $("#choose-image").click(function () {
-        if ($("#main-image").val() !== "")
-            $("#choose-buttons").show();
-        })
-}
 
 function submitMainImage(){
-    // $("#selected-captions-overview").hide()
     $("#choose-main-image").submit(function (event) {
         let formData = {
             main_image: $("#main-image").val(),
@@ -185,26 +185,36 @@ function submitMainImage(){
 
 function flipCard() {
     $('.flip-card').click(function () {
-        $(this).addClass("is-flipped")
-        let player = $(this).children(".card__face--back").children("p")[1].innerText;
-        let formData = {
-            card_player: player,
-            game_PIN: $("#game_pin").val()
-        };
-        console.log(formData)
-        $.ajax({
-            type: "POST",
-            url: "./scripts/sync_card_status.php",
-            data: formData,
-            dataType: "json",
-            encode: true,
-        })
-        event.preventDefault();
+        if (!$(this).hasClass("is-flipped")){
+            $(this).addClass("is-flipped")
+            let player = $(this).children(".card__face--back").children("p")[1].innerText;
+            let formData = {
+                card_player: player,
+                game_PIN: $("#game_pin").val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "./scripts/sync_card_status.php",
+                data: formData,
+                dataType: "json",
+                encode: true,
+            })
+
+            let all_cards = $("#all-captions-final").children("div");
+            let complete = true;
+            for (let i = 0; i < all_cards.length; i++){
+                if (!all_cards[i].children("span").hasClass("is-flipped"))
+                    complete = false
+            }
+            console.log(complete)
+            if (complete === true){
+                $("#choose-winner").show()
+            }
+        }
     });
 }
 
 function selectWinner() {
-    // $("#choose-winner").hide()
     $("#all-captions-final .card__face--back").click(function () {
         let selected_text = $(this).children("p")[0].innerText;
         let winner = $(this).children("p")[1].innerText;
@@ -213,7 +223,6 @@ function selectWinner() {
         $("#winner-caption").val(selected_text);
         $("#winner-name").val(winner);
         $("#choose-winner").show()
-
     })
 }
 
@@ -280,32 +289,25 @@ function submitImage() {
     });
 }
 
-function sync_cards(){
-    let all_cards = $('#all-captions-final').children('div');
-    setInterval(function () {
-        $.getJSON("./data/game/game_data.json", function (json) {
-            let PIN = $("#selected-caption-code").val();
-            let round = json[PIN]["round"]["number"];
-            let images = json[PIN]["round"]["round_info"][round]["submitted"]
-            for ([player, info] of Object.entries(images)){
-                if (info["status"] === "open"){
-                    for (let i = 0; i < all_cards.length; i++){
-                        let name = all_cards[i].firstChild.value;
-                        if (player === name) {
-                            console.log("YASSS")
-                            let id = $("#" + all_cards[i].id);
-                            id.children("span").addClass("is-flipped");
-                            // console.log($("#" +id).children("span"))
-                            id.children("span").children('div').addClass("is-flipped");
-                        }
-                    }
-                }
-            }
-        })
-    }, 2000)
-}
 
 function sync_winner(){
+    setInterval(function () {
+        if ($("#show-winner").attr("display", "none")){
+            $.getJSON("./data/game/game_data.json", function (json) {
+                let PIN = $("#selected-caption-code").val();
+                let round = json[PIN]["round"]["number"];
+                let key = Object.keys(json[PIN]["round"]["round_info"][round]["winner"]).length;
+                if (key === 1){
+                    console.log("YAYYYY")
+                    console.log(json[PIN]["round"]["round_info"][round]["winner"].length)
+                    $("#show-winner").load(window.location.href + " #show-winner").show()
+                }
+            })
+        }
+    }, 1000)
+}
+
+function nextRound(){
     setInterval(function () {
         if ($("#show-winner").attr("display", "none")){
             $.getJSON("./data/game/game_data.json", function (json) {
@@ -338,6 +340,7 @@ $(function () {
     // Lobby page
     closeButtonAvatar()
     selectButtonAvatar()
+
     $("#username-input").keyup(function () {
         checkUsername()
     });
@@ -347,7 +350,7 @@ $(function () {
     $("#judge-overview").hide()
 
     hideForm()
-    chooseImage()
+
 
     if (window.location.href.endsWith("lobby.php")){
         setInterval(function () {
@@ -368,7 +371,7 @@ $(function () {
     $("#avatar-box").hide()
     showAvatarsIcon()
     chooseAvatar()
-    startGame()
+    // startGame()
 
     setInterval(function () {
             $("#chosen-image").load(window.location.href + " #chosen-image")}
@@ -377,74 +380,53 @@ $(function () {
     //         $("#selected-captions-overview").load(window.location.href + " #selected-captions-overview")}
     //     , 2000);
 
-    setInterval(function () {
-        if ($("#all-captions-final").length === 0){
-            $("#selected-captions-overview").load(window.location.href + " #selected-captions-overview")
-        } else {
-            let all_cards = $('#all-captions-final').children('div');
-            console.log("WORKING")
-            $.getJSON("./data/game/game_data.json", function (json) {
-                let PIN = $("#selected-caption-code").val();
-                let round = json[PIN]["round"]["number"];
-                let images = json[PIN]["round"]["round_info"][round]["submitted"]
-                for ([player, info] of Object.entries(images)){
-                    if (info["status"] === "open"){
-                        for (let i = 0; i < all_cards.length; i++){
-                            let name = all_cards[i].firstChild.value;
-                            if (player === name) {
-                                let id = $("#" + all_cards[i].id);
-                                id.children("span").addClass("is-flipped");
-                                id.children("span").children('div').addClass("is-flipped");
-                            }
-                        }
-                    }
-                }
-            })
-        }
-        }
-        , 500);
 
 
-    submitWinner()
-    selectWinner()
-    selectImage()
-    submitImage()
-    submitMainImage()
+
+
 
     // Player functions
     // $("#next-round").hide()
     $("#submit-caption").hide();
 
-    // Judge functions
-
-
-    // flipCard()
-    // sync_cards()
-    showChoice()
+    ///////////// Judge functions /////////////
+    // Choosing the main picture
+    chooseImage()
+    $("#choose-winner").hide()
+    $("#selected-captions-overview").hide()
+    $("#show-winner").hide()
+    submitWinner()
+    selectWinner()
+    selectImage()
+    submitImage()
+    submitMainImage()
     sync_winner()
-
-
+    // Sync cards
     setInterval(function () {
-        let all_cards = $('#all-captions-final').children('div');
-        console.log("WORKING")
-        $.getJSON("./data/game/game_data.json", function (json) {
-            let PIN = $("#selected-caption-code").val();
-            let round = json[PIN]["round"]["number"];
-            let images = json[PIN]["round"]["round_info"][round]["submitted"]
-            for ([player, info] of Object.entries(images)){
-                if (info["status"] === "open"){
-                    for (let i = 0; i < all_cards.length; i++){
-                        let name = all_cards[i].firstChild.value;
-                        if (player === name) {
-                            let id = $("#" + all_cards[i].id);
-                            id.children("span").addClass("is-flipped");
-                            id.children("span").children('div').addClass("is-flipped");
+            if ($("#all-captions-final").length === 0){
+                $("#selected-captions-overview").load(window.location.href + " #selected-captions-overview")
+            } else {
+                let all_cards = $('#all-captions-final').children('div');
+                $.getJSON("./data/game/game_data.json", function (json) {
+                    let PIN = $("#selected-caption-code").val();
+                    let round = json[PIN]["round"]["number"];
+                    let images = json[PIN]["round"]["round_info"][round]["submitted"]
+                    for ([player, info] of Object.entries(images)){
+                        if (info["status"] === "open"){
+                            for (let i = 0; i < all_cards.length; i++){
+                                let name = all_cards[i].firstChild.value;
+                                if (player === name) {
+                                    let id = $("#" + all_cards[i].id);
+                                    id.children("span").addClass("is-flipped");
+                                    id.children("span").children('div').addClass("is-flipped");
+                                }
+                            }
                         }
                     }
-                }
+                })
             }
-        })
-    }, 500)
+        }
+        , 500);
 
     setInterval(function () {
         $.getJSON("./data/game/game_data.json", function (json) {
@@ -453,23 +435,7 @@ $(function () {
             if (status === "clicked"){
                 $("#next-round").submit()
             }
-            // let rounds = Object.keys(images).length
-            // if
-            // for ([player, info] of Object.entries(images)){
-            //     if (info["status"] === "open"){
-            //         for (let i = 0; i < all_cards.length; i++){
-            //             let name = all_cards[i].firstChild.value;
-            //             if (player === name) {
-            //                 console.log("YASSS")
-            //                 let id = $("#" + all_cards[i].id);
-            //                 id.children("span").addClass("is-flipped");
-            //                 // console.log($("#" +id).children("span"))
-            //                 id.children("span").children('div').addClass("is-flipped");
-            //             }
-            //         }
-            //     }
-            // }
         })
-    }, 100)
+    }, 1000)
 
 })
