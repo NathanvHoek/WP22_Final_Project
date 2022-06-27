@@ -102,7 +102,7 @@ a {
 }
 
 .start-header h1 {
-  font-size: 60px;
+  font-size: 50px;
   font-family: 'Roboto', sans-serif;
   color: black;
 }
@@ -136,6 +136,7 @@ a {
 
 /* ------------- Room number -------------- */
 #room-number {
+  margin-top: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -161,20 +162,20 @@ a {
 }
 
 .add-player {
-  height: 100px;
+  height: 150px;
   width: 100vw;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  margin: 20px;
+  margin: 40px;
 }
 
 .add-player form {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  height: 100%;
 }
 
 .add-player form * {
@@ -186,7 +187,7 @@ a {
   border: none;
   cursor: pointer;
   height: 70px;
-  width: 100px;
+  width: fit-content;
   padding: 10px;
 }
 
@@ -194,6 +195,7 @@ a {
   height: 70px;
   width: 300px;
   padding: 5px 25px;
+  font-size: 1.9em;
   border: none;
   border-bottom: 3px solid white;
   background: none;
@@ -201,28 +203,28 @@ a {
   outline: none;
 }
 
-#username-input::placeholder {
-  color: #999 !important;
-  opacity: 1;
-}
 /* ---------- Avatar overview ----------- */
 #avatar-box {
-  border-radius: 20px;
+  border-radius: 5px;
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
   background-color: white;
-  border: 5px solid #6c476c;
-  padding: 30px;
+  border: 2px solid grey;
+  justify-content: space-evenly;
+  padding: 20px 30px;
   position: fixed;
-  width: 50%;
-  height: 300px;
+  width: 50vw;
+  height: 50vh;
+  z-index: 1;
   top: 50%;
   left: 50%;
-  z-index: 1;
-  margin-top: -100px; /* Negative half of height. */
-  margin-left: -250px; /* Negative half of width. */
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 0px 5px grey;
 }
 
 #avatar-overview {
-   height: 200px;
+   height: 90%;
    overflow-y: auto;
    display: flex;
    justify-content: space-evenly;
@@ -235,24 +237,33 @@ a {
   border-radius: 50%;
   cursor: pointer;
   margin: 5px;
-  border: 5px solid black;
+  border: 5px solid white;
+  transition: transform .2s;
+  box-shadow: 0px 0px 5px grey;
 }
 
 .small-avatars:hover {
+  transform: scale(1.05);
   border: 5px solid grey;
+
 }
 
 #avatar {
-  width: 100%;
-  height: 100%;
+  width: 100px;
+  height: 100px;
+  margin-right: 50px;
   border-radius: 50%;
+  border: 5px solid white;
+  box-shadow: 0px 0px 5px grey;
 }
 
 #cancel-submit {
   position: absolute;
-  bottom: 0;
+  bottom: 2%;
   display: flex;
   justify-content: space-evenly;
+  height: 10%;
+  width: 100%;
 }
 
 #cancel-submit button {
@@ -269,35 +280,38 @@ a {
 .player-overview {
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 200px;
+  justify-content: space-evenly;
+  min-height: 200px;
   width: 100vw;
   flex-wrap: wrap;
-  paddin-bottom: 100px;
+  padding-bottom: 130px;
 }
 
 .player-icon {
-  height: 80%;
-  width: 80%;
-  background-color: aquamarine;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 140px;
+  width: 140px;
   border-radius: 50%;
   animation: ease-in;
+  border: 10px solid white;
 }
 
 .player-div {
-  height: 200px;
-  min-width: 200px;
+  height: 205px;
+  min-width: 170px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: #e3b4b4;
+  justify-content: space-between;
+  background-color: purple;
   margin: 10px;
-  padding: 10px;
+  padding: 15px 0px 10px 0px;
+  box-shadow: 0px 0px 5px grey;
+}
+
+.player-div p {
+  font-size: 1.1em;
+  color: white;
 }
 
 #start-game-form {
@@ -337,20 +351,7 @@ a {
   cursor: pointer;
 }
 
-.small-avatars {
-  height: 120px;
-  width: 120px;
-  border-radius: 50%;
-  cursor: pointer;
-  margin: 5px;
-  border: 2px solid #9fdfe1;
-  transition: transform .2s;
-}
 
-.small-avatars:hover {
-  transform: scale(1.25); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-/*>>>>>>> 457873aa3932af410666d1803e554a43154d4acd*/
-}
 
 .cards {
   width: 250px;
@@ -567,7 +568,7 @@ a {
   font-size: 30px;
 }
 
-/*<<<<<<< HEAD*/
+
 #selected-caption-div {
   height: 100px;
   margin-top: 20px;
@@ -579,36 +580,7 @@ a {
   font-size: 20px;
   text-align: center;
 }
-#avatar-box {
-   border-radius: 20px;
-   overflow-y: auto;
-   display: flex;
-   flex-wrap: wrap;
-   background-color: #9fdfe1;
-   border: 5px solid purple;
-   justify-content: space-evenly;
-   padding: 20px 30px;
-   position: fixed;
-   width: 500px;
-   height: 250px;
-   z-index: 1;
-   top: 50%;
-   left: 50%;
-   margin-top: -100px; /* Negative half of height. */
-   margin-left: -250px; /* Negative half of width. */
- }
 
-#avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  transition: transform .2s;
-}
-
-#avatar:hover {
-  transform: scale(1.25); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
->>>>>>> 457873aa3932af410666d1803e554a43154d4acd
-}
 
 #choice {
   display: flex;
@@ -659,10 +631,8 @@ a {
 
 .card p {
   color: white;
-=======
   width: 100%;
   background-color: #9fdfe1;
->>>>>>> 457873aa3932af410666d1803e554a43154d4acd
 }
 
 /*.card img {*/

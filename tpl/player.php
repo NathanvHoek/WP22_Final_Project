@@ -35,6 +35,7 @@
 <div id="submit-caption">
     <form>
         <input type="text" id="selected-caption-named" name="name" value="<?= $_SESSION["username"] ?>" hidden>
+        <input type="text" id="round" name="name" value="<?= $_SESSION["round"] ?>" hidden>
         <input type="text" id="selected-caption-code" name="name" value="<?= $_SESSION["game_PIN"] ?>" hidden>
         <input type="text" id="selected-caption-input" name="caption" hidden>
         <button class="btn btn-primary" id="send-image">Send this gorgeous piece of artwork</button>

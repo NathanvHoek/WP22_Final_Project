@@ -12,7 +12,10 @@ echo "<p>The winner is $winner_name</p>";
 echo "<img src='$image'>";
 echo "<p>$winner_caption</p>"
 ?>
-    <a href="tpl/next_round.php"><button>Go to next round</button></a>
+    <form id="next-round" action="tpl/next_round.php" method="post">
+        <button>Go to next round</button></a>
+    </form>
+
 </div>
 
 
