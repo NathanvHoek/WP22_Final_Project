@@ -58,10 +58,12 @@ a {
 /*------------------*/
 
 .lobby_container {
-  height: 100vh;
+  height: 100%;
   background-color: ghostwhite;
 }
 
+/*<<<<<<< HEAD*/
+/*=======*/
 .head {
   display: flex;
   justify-content: center;
@@ -82,44 +84,9 @@ a {
   align-items: center;
   justify-content: center;
 }
+/*>>>>>>> 457873aa3932af410666d1803e554a43154d4acd*/
 
 
-.card-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  height: 400px;
-  width: 100%;
-  overflow-x: auto;
-}
-
-.card {
-  background-color: purple;
-  color: white;
-  font-size: 1.1em;
-  border: 2px solid black;
-  height: 300px;
-  width: 250px;
-  border-radius: 10px;
-  padding: 20px;
-  cursor: pointer;
-  margin: 20px;
-}
-
-.card img {
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto;
-  width: 100%;
-  height: 100%;
-}
-
-button {
-  width: 100px;
-  height: 70px;
-  border-radius: 20px;
-}
 
 .start-buttons {
   display: flex;
@@ -137,7 +104,7 @@ button {
 .start-header h1 {
   font-size: 60px;
   font-family: 'Roboto', sans-serif;
-  color: white;
+  color: black;
 }
 
 .start-buttons * {
@@ -161,34 +128,44 @@ button {
   font-family: 'Roboto', sans-serif;;
 }
 
-.player-overview {
-  /*position: fixed;*/
-  /*bottom: 20px;*/
+
+
+/* ---------------------------------------- */
+/* -------------- LOBBY PAGE -------------- */
+/* ---------------------------------------- */
+
+/* ------------- Room number -------------- */
+#room-number {
   display: flex;
-  align-items: center;
   justify-content: center;
-  height: 400px;
-  width: 100vw;
-  flex-wrap: wrap;
+  align-items: center;
+  font-size: 25px;
 }
 
-.player-icon {
-  height: 95%;
-  width: 95%;
-  background-color: aquamarine;
+#room-number h1 {
+  font-size: 25px;
+}
+
+
+/* ------------- Add player -------------- */
+#choose-avatar-btn {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 70px;
+  width: 70px;
+  background-color: lightgrey;
   border-radius: 50%;
-  animation: ease-in;
+  border: 5px solid white;
+  cursor: pointer;
 }
 
 .add-player {
-  height: 50px;
+  height: 100px;
   width: 100vw;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   padding: 20px;
   margin: 20px;
@@ -204,16 +181,17 @@ button {
   margin: 10px;
 }
 
-#avatar-button {
-  height: 25px;
-  width: fit-content;
-  padding: 5px 25px;
-  display: flex;
-  align-items: center;
+#join-game {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  height: 70px;
+  width: 100px;
+  padding: 10px;
 }
 
 #username-input {
-  height: 50px;
+  height: 70px;
   width: 300px;
   padding: 5px 25px;
   border: none;
@@ -227,6 +205,220 @@ button {
   color: #999 !important;
   opacity: 1;
 }
+/* ---------- Avatar overview ----------- */
+#avatar-box {
+  border-radius: 20px;
+  background-color: white;
+  border: 5px solid #6c476c;
+  padding: 30px;
+  position: fixed;
+  width: 50%;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  margin-top: -100px; /* Negative half of height. */
+  margin-left: -250px; /* Negative half of width. */
+}
+
+#avatar-overview {
+   height: 200px;
+   overflow-y: auto;
+   display: flex;
+   justify-content: space-evenly;
+   flex-wrap: wrap;
+ }
+
+.small-avatars {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 5px;
+  border: 5px solid black;
+}
+
+.small-avatars:hover {
+  border: 5px solid grey;
+}
+
+#avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+#cancel-submit {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+#cancel-submit button {
+  height: 40px;
+  width: fit-content;
+  padding: 0px 20px;
+}
+
+#greeting {
+  font-size: 60px;
+}
+
+/* ---------- Player overview ----------- */
+.player-overview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  width: 100vw;
+  flex-wrap: wrap;
+  paddin-bottom: 100px;
+}
+
+.player-icon {
+  height: 80%;
+  width: 80%;
+  background-color: aquamarine;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  animation: ease-in;
+}
+
+.player-div {
+  height: 200px;
+  min-width: 200px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #e3b4b4;
+  margin: 10px;
+  padding: 10px;
+}
+
+#start-game-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  background-color: white;
+  padding: 40px;
+}
+
+
+/* ---------------------------------------- */
+/* ----------- DISTRIBUTION PAGE ---------- */
+/* ---------------------------------------- */
+
+.header {
+  display: flex;
+  justify-content: center;
+/*<<<<<<< HEAD*/
+  padding: 50px 0px;
+}
+
+
+/* CARDS ANIMATION*/
+
+#card-animation{
+    margin-left: 10%;
+=======
+  height: 50px;
+  width: 50px;
+  background-color: lightgrey;
+  border-radius: 50%;
+  border: 3px solid purple;
+  cursor: pointer;
+}
+
+.small-avatars {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 5px;
+  border: 2px solid #9fdfe1;
+  transition: transform .2s;
+}
+
+.small-avatars:hover {
+  transform: scale(1.25); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+/*>>>>>>> 457873aa3932af410666d1803e554a43154d4acd*/
+}
+
+.cards {
+  width: 250px;
+  height: 170px;
+  margin: 40px;
+  padding: 20px;
+  color: white;
+  font-size: large;
+  position: absolute;
+  box-shadow: 2px 2px 5px grey;
+  border-radius: 5%;
+}
+
+#card1 {
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 3s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+#card2 {
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 2.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+#card3 {
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 2s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+#card4 {
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 1.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+#card5 {
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+#card6 {
+  animation-name: shuffle;
+  animation-duration: 1s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+}
+
+@keyframes shuffle {
+  25% {transform: translateX(315px);}
+  50% {transform: translateX(0px);}
+  100% {opacity: 0;}
+}
+
+
 
 #join-code {
   height: 25px;
@@ -236,25 +428,8 @@ button {
   border: 1px solid black;
 }
 
-#join-game {
-  outline: none;
-  border: none;
-  cursor: pointer;
-  height: 50px;
-  width: 100px;
-  padding: 10px;
-}
 
-.player-div {
-  height: 100px;
-  width: 100px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: white;
-  margin: 10px;
-}
+
 
 .scores {
   height: 100%;
@@ -279,104 +454,54 @@ button {
   margin: 20px;
 }
 
-#choose-avatar-btn {
+
+
+
+/* ---------------------------------------- */
+/* -------------- JUDGE PAGE -------------- */
+/* ---------------------------------------- */
+.judge-main-image{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#choose-winner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  margin-top: 30px;
+}
+
+#show-winner {
+  height: 50vh;
+  width: 50vw;
+  border-radius: 10px;
+  border: 5px solid black;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index:1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+   /* Negative half of height. */
+}
+
+#show-winner p {
+  font-size: 1.1em;
+}
+
+#winner-caption-btn {
+  width: fit-content;
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 50px;
-  width: 50px;
-  background-color: lightgrey;
-  border-radius: 50%;
-  border: 3px solid purple;
-  cursor: pointer;
+  height: 25px;
 }
-
-.small-avatars {
-  height: 120px;
-  width: 120px;
-  border-radius: 50%;
-  cursor: pointer;
-  margin: 5px;
-  border: 2px solid #9fdfe1;
-  transition: transform .2s;
-}
-
-.small-avatars:hover {
-  transform: scale(1.25); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-}
-
-.cards {
-  width: 250px;
-  height: 170px;
-  margin: 40px;
-  padding: 20px;
-  color: white;
-  font-size: large;
-  position: absolute;
-  box-shadow: 2px 2px 5px grey;
-  border-radius: 5%
-}
-
-#card1 {
-  background-color: white;
-  animation-name: shuffle;
-  animation-duration: 1s;
-  animation-delay: 3s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: 1;
-}
-
-#card2 {
-  background-color: white;
-  animation-name: shuffle;
-  animation-duration: 1s;
-  animation-delay: 2.5s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: 1;
-}
-
-#card3 {
-  background-color: white;
-  animation-name: shuffle;
-  animation-duration: 1s;
-  animation-delay: 2s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: 1;
-}
-
-#card4 {
-  background-color: white;
-  animation-name: shuffle;
-  animation-duration: 1s;
-  animation-delay: 1.5s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: 1;
-}
-
-#card5 {
-  background-color: white;
-  animation-name: shuffle;
-  animation-duration: 1s;
-  animation-delay: 1s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: 1;
-}
-
-#card6 {
-  background-color: white;
-  animation-name: shuffle;
-  animation-duration: 1s;
-  animation-delay: 0.5s;
-  animation-fill-mode: forwards;
-  animation-iteration-count: 1;
-}
-
-@keyframes shuffle {
-  25% {transform: translateX(315px);}
-  50% {transform: translateX(0px);}
-  100% {opacity: 0;}
-}
-
 
 .judge-images {
   overflow-y: scroll;
@@ -384,43 +509,76 @@ button {
   height: 400px;
   padding: 10px;
   margin: 10px;
-
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 
-.judge-images img {
+.choose-picture {
   height: 200px;
   cursor: pointer;
+  margin: 10px;
 }
 
-.judge-images img:hover {
+.choose-picture.active, .choose-picture.active:hover{
+  border: 5px solid green;
+}
+
+#selected-update {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+
+.choose-picture:hover {
   height: 200px;
   transform: scale(1.05);
+}
+
+.choose-picture:hover {
+  border: 5px solid grey;
 }
 
 .judge-images img:active {
   height: 200px;
 }
 
-/*#container {*/
-/*  width: 80%;*/
-/*  !*border-radius: 25px;*!*/
-/*  border: 2px solid Black;*/
-/*  padding: 15px 15px 15px 15px;*/
-/*  margin: 20px 20px 20px 20px;*/
-/*  background: #A4D3EE;*/
-/*  overflow: visible;*/
-/*  box-shadow: 5px 5px 2px #888888;*/
-/*  position: relative;*/
-/*}*/
-
-#close-button {
-  position: absolute;
-  background: red;
-  color: white;
-  top: -10px;
-  right: -10px;
+.jumbotron {
+  background-color: #f4f3fb !important;
+  color: #ffffff;
+  margin-bottom: 0px !important;
+  /*padding-top: 80px;*/
 }
 
+
+
+
+
+/* ---------------------------------------- */
+/* -------------- PLAYER PAGE ------------- */
+/* ---------------------------------------- */
+.player-status-message {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  padding: 25px 0px;
+  font-size: 30px;
+}
+
+/*<<<<<<< HEAD*/
+#selected-caption-div {
+  height: 100px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#selected-caption-div p {
+  font-size: 20px;
+  text-align: center;
+}
 #avatar-box {
    border-radius: 20px;
    overflow-y: auto;
@@ -449,27 +607,76 @@ button {
 
 #avatar:hover {
   transform: scale(1.25); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+>>>>>>> 457873aa3932af410666d1803e554a43154d4acd
 }
 
+#choice {
+  display: flex;
+  animation: ease-in;
+}
 
-#cancel-submit {
-  /*position: relative;*/
-  /*bottom: 0;*/
+#chosen-image {
+  height: 200px;
   display: flex;
   justify-content: center;
-  width: 100%;
-  background-color: #9fdfe1;
+  align-items: center;
 }
 
-/*.active {*/
-/*  border: 3px solid green;*/
+#send-image {
+  width: fit-content;
+  padding: 0 50px;
+  height: 30px;
+}
+
+#submit-caption {
+  display: flex;
+  justify-content: center;
+  height: 30px;
+}
+
+.card-container-overview {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 350px;
+  width: 100vw;
+  overflow-x: auto;
+}
+
+.card {
+  background-color: purple;
+  color: white;
+  font-size: 1.1em;
+  border: 2px solid purple;
+  height: 300px;
+  min-width: 250px;
+  border-radius: 10px;
+  padding: 20px;
+  cursor: pointer;
+  margin: 20px;
+}
+
+.card p {
+  color: white;
+=======
+  width: 100%;
+  background-color: #9fdfe1;
+>>>>>>> 457873aa3932af410666d1803e554a43154d4acd
+}
+
+/*.card img {*/
+/*  display: block;*/
+/*  margin-top: auto;*/
+/*  margin-bottom: auto;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
 /*}*/
 
-.jumbotron {
-  background-color: #f4f3fb !important;
-  color: #ffffff;
-  margin-bottom: 0px !important;
-  padding-top: 80px;
+button {
+  width: 100px;
+  height: 70px;
+  border-radius: 20px;
 }
 
 .header-loading {
@@ -513,4 +720,62 @@ button {
   100% { transform: rotate(360deg); }
 }
 
+.scene {
+  display: inline-block;
+  width: 300px;
+  height: 350px;
+  margin: 40px 0;
+  perspective: 600px;
+  /*box-shadow: 1px 1px black;*/
+}
 
+.flip-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform-origin: right;
+  transition: transform 1s;
+  /*box-shadow: 1px 1px black;*/
+}
+
+.flip-card.is-flipped {
+  transform: translateX(-100%) rotateY(-180deg);
+}
+
+.card__face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: black;
+  font-size: 40px;
+  backface-visibility: hidden;
+  border-radius: 5%;
+  box-shadow: 5px 5px grey;
+}
+
+.card__face--front {
+  background: white;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+  box-shadow: 0 0 5px grey;
+}
+
+
+.card__face--back {
+  background: purple;
+  transform: rotateY(180deg);
+  color: white;
+  padding: 30px;
+  font-size: 18px;
+  backface-visibility: hidden;
+  box-shadow: 0 0 5px grey;
+
+}

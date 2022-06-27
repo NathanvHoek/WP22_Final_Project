@@ -1,7 +1,11 @@
 <?php
 include "tpl/head.php";
-include "tpl/header.php";
 ?>
+    <div class="jumbotron">
+        <div class="text-center">
+            <img src="media/logo/wdym_logo_ex_sm.png" class="rounded" alt="small logo">
+        </div>
+    </div>
 
 <div class="container">
     <h1>Distributing the captions cards...</h1>
@@ -70,7 +74,7 @@ $json_file = fopen('data/player_data.json', 'w');
 fwrite($json_file, json_encode($players));
 fclose($json_file);
 
-header("refresh:3; url= ./game.php");
+//header("refresh:3; url= ./game.php");
 ?>
 
 </div>

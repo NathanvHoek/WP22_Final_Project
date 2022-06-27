@@ -1,64 +1,71 @@
-/////////////////////////////////////
-//////////// INDEX PAGE /////////////
-/////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+/////////////////////////// INDEX PAGE ///////////////////////////
+//////////////////////////////////////////////////////////////////
 
-function toggleJoinButton(room_exists) {
+function toggleJoinButton(room_exists, PIN) {
+    let join_button = $("#pin-join-button")
+    console.log(PIN)
     if (room_exists){
-            $("#pin-join-button").addClass('active');
-            $("#pin-join-button").removeClass('inactive');
-            $("#pin-join-button").attr("disabled", false);
+            join_button.attr("disabled", false);
     }
-
-    else { console.log("Not available")
-        $("#pin-join-button").addClass('inactive');
-        $("#pin-join-button").removeClass('active');
-        $("#pin-join-button").attr("disabled", true);
+    else {
+        join_button.attr("disabled", true);
     }
 }
 
 function checkPIN() {
     let PIN = $("#join-code").val();
     let room_exists = false;
-    $.getJSON("data/game/player_data.json", function (json) {
+    $.getJSON("data/game/game_data.json", function (json) {
        if (json[PIN]) {
            room_exists = true;
        }
-       toggleJoinButton(room_exists)
+       console.log(typeof PIN)
+       toggleJoinButton(room_exists, PIN)
     })
 
 }
 
 
-/////////////////////////////////////
-//////////// LOBBY PAGE /////////////
-/////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+/////////////////////////// LOBBY PAGE ///////////////////////////
+//////////////////////////////////////////////////////////////////
 
-// ---------- AVATARS ----------
+// Selecting avatar
 function showAvatarsIcon(){
     $("#choose-avatar-btn").click(function () {
-        $("#avatar-box").toggle();
+        $("#avatar-box").show();
     });
 }
 
 function chooseAvatar(){
     $("#avatar-overview .small-avatars").click(function () {
-        let img_src = $(this).attr('src');
-        $("#avatar").attr("src", img_src);
-        $("#avatar-input").val(img_src);
+        $("#avatar-overview .small-avatars").css("border", "5px solid black");
+        $(this).css("border", "5px solid green");
+        $("#submit-avatar").data("image", $(this).attr('src'))
     })
 }
 
-function closeButton() {
+function closeButtonAvatar() {
     $("#close-button").click(function () {
-        $(this).parent("div").hide();
+        $("#avatar-overview .small-avatars").css("border", "5px solid black");
+        $("#avatar-box").hide();
+    })
+}
+
+function selectButtonAvatar() {
+    $("#submit-avatar").click(function () {
+        let img_src = $(this).data("image");
+        $("#avatar").attr("src", img_src);
+        $("#avatar-input").val(img_src);
+        $("#avatar-box").hide();
     })
 }
 
 function startGame(){
-    let player_count = $("#avatar-overview .small-avatars").children.length
-    let start_button = $("#start-game a").click(function () {
-        start_button.disabled = player_count < 3;
-    });
+    $("#start-game").click(function () {
+        console.log("Start game")
+    })
 }
 
 // ---------- ADD PLAYER FORM ----------
@@ -70,31 +77,31 @@ function hideForm(){
     })
 }
 
-async function checkUsername() {
-    let username = $("#username-input").val()
-    let response = await fetch("data/player_data.json");
-    let players = await response.json();
-
-    for (let i = 0; i < players.length; i++) {
-        let player_name = players[i]["player_name"];
-        if (username === player_name) {
-            $("#username-input").css("border", "3px solid red");
-            return false;
-        }
-        else if (username === ""){
-            $("#username-input").css("border", "1px solid green");
-            return false;
-        }
-        // else {
-        //     $("#username-input").css("border", "1px solid green");
-        //     return true;
-        // }
-    }
-// });
-}
+// async function checkUsername() {
+//     let username = $("#username-input").val()
+//     let response = await fetch("data/player_data.json");
+//     let players = await response.json();
+//
+//     for (let i = 0; i < players.length; i++) {
+//         let player_name = players[i]["player_name"];
+//         if (username === player_name) {
+//             $("#username-input").css("border", "3px solid red");
+//             return false;
+//         }
+//         else if (username === ""){
+//             $("#username-input").css("border", "1px solid green");
+//             return false;
+//         }
+//         // else {
+//         //     $("#username-input").css("border", "1px solid green");
+//         //     return true;
+//         // }
+//     }
+// // });
+// }
 
 function submitPlayerForm(){
-    $("#add-player-form").click(function (event) {
+    $("#join-game").click(function (event) {
             let formData = {
                 room_PIN: $("#room-pin").val(),
                 username: $("#username-input").val(),
@@ -110,28 +117,43 @@ function submitPlayerForm(){
             })
 
             event.preventDefault();
+            $("#avatar-box").hide();
 
             setTimeout(function () {
                 $(".player-overview").load(window.location.href + " .player-overview")
             }, 100)
     });
-};
+}
 
+//////////////////////////////////////////////////////////////////
+/////////////////////////// JURY PAGE ////////////////////////////
+//////////////////////////////////////////////////////////////////
 
-///////////// JURY PAGE //////////////
 function chooseImage(){
     $(".judge-images .choose-picture").click(function () {
         let img_src = $(this).attr('src');
+        $(".judge-images .choose-picture").removeClass("active");
+        $(this).addClass("active");
         $("#main-image").val(img_src);
     })
 }
 
+function showChoice(){
+    $("#choose-buttons").hide();
+    $("#choose-image").click(function () {
+        if ($("#main-image").val() !== "")
+            $("#choose-buttons").show();
+        })
+}
+
 function submitMainImage(){
+    // $("#selected-captions-overview").hide()
     $("#choose-main-image").submit(function (event) {
-        // Check input
         let formData = {
-            main_image: $("#main-image").val()
+            main_image: $("#main-image").val(),
+            game_PIN: $("#game_PIN").val()
         };
+        console.log(formData)
 
         $.ajax({
             type: "POST",
@@ -141,30 +163,94 @@ function submitMainImage(){
             encode: true,
         })
         event.preventDefault();
+        console.log(formData)
         setTimeout(function (){$(".judge-main-image").load(window.location.href + " .judge-main-image")}, 10)
         $("#judge-overview").show()
+        $("#chosen-image").show()
+        $("#selected-captions-overview").show()
         $("#choose-main-image").hide()
 
     });
 }
 
-function selectImage() {
-    $(".card-container .card").click(function () {
+function flipCard() {
+    $('.flip-card').click(function () {
+        $(this).addClass("is-flipped")
+        let player = $(this).children(".card__face--back").children("p")[1].innerText;
+        let formData = {
+            card_player: player,
+            game_PIN: $("#game_pin").val()
+        };
+        console.log(formData)
+        $.ajax({
+            type: "POST",
+            url: "./scripts/sync_card_status.php",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        })
+        event.preventDefault();
+    });
+}
+
+function selectWinner() {
+    // $("#choose-winner").hide()
+    $("#all-captions-final .card__face--back").click(function () {
         let selected_text = $(this).children("p")[0].innerText;
-        $(".card-container .card").css("border", "3px solid black")
+        let winner = $(this).children("p")[1].innerText;
+        $("#all-captions-final .card__face--back").css("border", "3px solid black")
         $(this).css("border", "3px solid green");
-        document.getElementById("selected-caption").innerText = selected_text;
+        $("#winner-caption").val(selected_text);
+        $("#winner-name").val(winner);
+        $("#choose-winner").show()
+
+    })
+}
+
+function submitWinner() {
+    $("#show-winner").hide()
+    $("#next-round").hide()
+    $("#winner-caption-btn").click(function (event) {
+        let formData = {
+            caption: $("#winner-caption").val(),
+            room_PIN: $("#game_pin").val(),
+            name: $("#winner-name").val()
+        };
+        console.log(formData)
+        $.ajax({
+            type: "POST",
+            url: "./scripts/choose_winner.php",
+            data: formData,
+            dataType: "json",
+            encode: true,
+        })
+        event.preventDefault();
+        $("#show-winner").load(window.location.href + " #show-winner").show()
+        // $("#show-winner").show()
+    })
+}
+
+//////////////////////////////////////////////////////////////////
+////////////////////////// PLAYER PAGE ///////////////////////////
+//////////////////////////////////////////////////////////////////
+function selectImage() {
+
+    $(".card-container-overview .card").click(function () {
+        let selected_text = $(this).children("p")[0].innerText;
+        $(".card-container-overview .card").css("border", "3px solid purple")
+        $(this).css("border", "3px solid green");
+        $("#selected-caption").text(selected_text);
         $("#selected-caption-input").val(selected_text)
-        return true;
+        $("#submit-caption").show();
     })
 }
 
 function submitImage() {
     $("#send-image").click(function (event) {
-
         let formData = {
             caption: $("#selected-caption-input").val(),
-            name: $("#selected-caption-named").val()
+            name: $("#selected-caption-named").val(),
+            code: $("#selected-caption-code").val()
         };
         console.log(formData)
 
@@ -176,60 +262,178 @@ function submitImage() {
             encode: true,
         })
         event.preventDefault();
-        setTimeout(function (){$("#judge-overview").load(window.location.href + " #judge-overview")}, 100)
-        $("#judge-overview").show()
-        $(".card-container").hide()
+        setTimeout(function (){$(".judge-main-image").load(window.location.href + " .judge-main-image")}, 100)
+        $("#selected-captions-overview").show()
+        $(".card-container-overview").hide()
         $("#send-image").hide()
 
     });
 }
 
-//////////// MAIN FUNCTION //////////////
+function sync_cards(){
+    let all_cards = $('#all-captions-final').children('div');
+    setInterval(function () {
+        $.getJSON("./data/game/game_data.json", function (json) {
+            let PIN = $("#selected-caption-code").val();
+            let round = json[PIN]["round"]["number"];
+            let images = json[PIN]["round"]["round_info"][round]["submitted"]
+            for ([player, info] of Object.entries(images)){
+                if (info["status"] === "open"){
+                    for (let i = 0; i < all_cards.length; i++){
+                        let name = all_cards[i].firstChild.value;
+                        if (player === name) {
+                            console.log("YASSS")
+                            let id = $("#" + all_cards[i].id);
+                            id.children("span").addClass("is-flipped");
+                            // console.log($("#" +id).children("span"))
+                            id.children("span").children('div').addClass("is-flipped");
+                        }
+                    }
+                }
+            }
+        })
+    }, 2000)
+}
+
+function sync_winner(){
+    setInterval(function () {
+        if ($("#show-winner").attr("display", "none")){
+            $.getJSON("./data/game/game_data.json", function (json) {
+                let PIN = $("#selected-caption-code").val();
+                let round = json[PIN]["round"]["number"];
+                let key = Object.keys(json[PIN]["round"]["round_info"][round]["winner"]).length;
+                if (key === 1){
+                    console.log("YAYYYY")
+                    console.log(json[PIN]["round"]["round_info"][round]["winner"].length)
+                    $("#show-winner").load(window.location.href + " #show-winner").show()
+                }
+            })
+        }
+    }, 1000)
+}
+
+
+//////////////////////////////////////////////////////////////////
+////////////////////////////// MAIN //////////////////////////////
+//////////////////////////////////////////////////////////////////
+
 $(function () {
-    $("#username-input").keyup(function () {
-        checkUsername()
+
+    // Index page
+    $("#join-code").keyup(function () {
+        checkPIN();
     })
 
-    // if (checkUsername()) {
-        submitPlayerForm()
-    // }
 
-    closeButton()
-    // checkUsername()
+    // Lobby page
+    closeButtonAvatar()
+    selectButtonAvatar()
+    $("#username-input").keyup(function () {
+        checkUsername()
+    });
+
     $("#judge-overview").hide()
-    submitMainImage()
+
+    hideForm()
+    chooseImage()
+
+    if (window.location.href.endsWith("lobby.php")){
+        setInterval(function () {
+                $(".player-overview").load(window.location.href + " .player-overview")}
+            , 2000);
+
+        setInterval(function () {
+                $.getJSON("data/game/game_data.json", function (json) {
+                    let PIN = $("#join-code").val();
+                    if (json[PIN]["status"] === "active") {
+                        $("#start-game-form").submit();
+                    }
+                })}
+            , 500);
+    }
+
     submitPlayerForm()
     $("#avatar-box").hide()
     showAvatarsIcon()
     chooseAvatar()
     startGame()
-    hideForm()
-    chooseImage()
+
+    setInterval(function () {
+            $("#chosen-image").load(window.location.href + " #chosen-image")}
+        , 2000);
+    // setInterval(function () {
+    //         $("#selected-captions-overview").load(window.location.href + " #selected-captions-overview")}
+    //     , 2000);
+
+    setInterval(function () {
+        if ($("#all-captions-final").length === 0){
+            $("#selected-captions-overview").load(window.location.href + " #selected-captions-overview")
+        } else {
+            let all_cards = $('#all-captions-final').children('div');
+            console.log("WORKING")
+            $.getJSON("./data/game/game_data.json", function (json) {
+                let PIN = $("#selected-caption-code").val();
+                let round = json[PIN]["round"]["number"];
+                let images = json[PIN]["round"]["round_info"][round]["submitted"]
+                for ([player, info] of Object.entries(images)){
+                    if (info["status"] === "open"){
+                        for (let i = 0; i < all_cards.length; i++){
+                            let name = all_cards[i].firstChild.value;
+                            if (player === name) {
+                                let id = $("#" + all_cards[i].id);
+                                id.children("span").addClass("is-flipped");
+                                id.children("span").children('div').addClass("is-flipped");
+                            }
+                        }
+                    }
+                }
+            })
+        }
+        }
+        , 500);
+
+
+    submitWinner()
+    selectWinner()
     selectImage()
     submitImage()
+    submitMainImage()
 
-    $("#join-code").keyup(function () {
-       checkPIN();
-    })
+    // Player functions
+    // $("#next-round").hide()
+    $("#submit-caption").hide();
 
-    if ($("#pin-join-button").hasClass('active')){
-        $("#pin-join-button").click(function () {
-            let formData = {
-                room_PIN: $("#join-code").val(),
-            };
+    // Judge functions
 
-            $.ajax({
-                type: "POST",
-                url: "create_room.php",
-                data: formData,
-                dataType: "json",
-                encode: true,
-                success: window.location.href = "create_room.php"
-            })
+
+    // flipCard()
+    // sync_cards()
+    showChoice()
+    sync_winner()
+
+
+
+
+    setInterval(function () {
+        let all_cards = $('#all-captions-final').children('div');
+        console.log("WORKING")
+        $.getJSON("./data/game/game_data.json", function (json) {
+            let PIN = $("#selected-caption-code").val();
+            let round = json[PIN]["round"]["number"];
+            let images = json[PIN]["round"]["round_info"][round]["submitted"]
+            for ([player, info] of Object.entries(images)){
+                if (info["status"] === "open"){
+                    for (let i = 0; i < all_cards.length; i++){
+                        let name = all_cards[i].firstChild.value;
+                        if (player === name) {
+                            let id = $("#" + all_cards[i].id);
+                            id.children("span").addClass("is-flipped");
+                            id.children("span").children('div').addClass("is-flipped");
+                        }
+                    }
+                }
+            }
         })
-    }
-
-
-
+    }, 500)
 
 })
