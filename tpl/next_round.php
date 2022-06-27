@@ -15,7 +15,6 @@ $game_data = json_decode($json_file, true);
 $game_PIN = $_SESSION["game_PIN"];
 
 if (!$game_data[$game_PIN]["current_image"] == "clicked"){
-
     $game_data[$game_PIN]["round"]["number"]++;
     $_SESSION["round"] = $game_data[$game_PIN]["round"]["number"];
     $new_round = $game_data[$game_PIN]["round"]["number"];

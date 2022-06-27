@@ -27,9 +27,7 @@ include "tpl/head.php";
 <?php
     $json_file_players = file_get_contents("data/game/game_data.json");
     $games = json_decode($json_file_players, true);
-
     $status = $games[$_SESSION["game_PIN"]]["status"];
-    echo $games[$_SESSION["game_PIN"]]["round"]["round_info"];
 
     if ($games[$_SESSION["game_PIN"]]["status"] == "inactive") {
         // Change status to active (other players won't overwrite the distribution when their script is called)
@@ -91,6 +89,7 @@ include "tpl/head.php";
         $json_file = fopen('data/game/game_data.json', 'w');
         fwrite($json_file, json_encode($games));
         fclose($json_file);
+
         header("refresh:3; url= game.php");
 
         }

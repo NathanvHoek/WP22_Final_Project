@@ -32,11 +32,11 @@ else {
 
 ?>
 
-    <script>
-        window.onbeforeunload = function(){
-            return 'Are you sure you want to leave?';
-        };
-    </script>
+<!--    <script>-->
+<!--        window.onbeforeunload = function(){-->
+<!--            return 'Are you sure you want to leave?';-->
+<!--        };-->
+<!--    </script>-->
 
 <?php
 include "tpl/end.php"
