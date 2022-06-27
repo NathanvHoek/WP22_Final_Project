@@ -4,14 +4,20 @@ session_start();
 
 include "tpl/head.php"; ?>
 
+<div class="jumbotron">
+    <div class="text-center">
+        <img src="media/logo/wdym_logo_ex_sm.png" class="rounded" alt="small logo">
+    </div>
+</div>
+
 <?php
 if (empty($_POST["join-code"])){
-
-    echo "<h1>Create a room</h1>";
+    echo "<div class='header'>";
+    echo "<h1>Creating a new room</h1>";
+    echo "</div>";
 
     // Create random room number and assign to session variable
     $game_PIN = mt_rand(1111111, 9999999);
-    echo $game_PIN;
     $_SESSION["game_PIN"] = $game_PIN;
 
 
@@ -28,8 +34,8 @@ if (empty($_POST["join-code"])){
             "current_judge" => ""
         ],
         "round" => [
-            "status" => "in progress",
-            "number" => 0,
+            "number" => 1,
+            "round_info" => []
         ],
         "current_image" => "",
         "caption_cards_submitted" => []
@@ -49,6 +55,6 @@ else {
 ?>
 
 <?php
-header("refresh:2; url= ./lobby.php");
+header("refresh:2; url= lobby.php");
 include "tpl/end.php";
 ?>

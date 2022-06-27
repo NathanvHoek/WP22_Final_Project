@@ -2,6 +2,11 @@
 session_start();
 include "tpl/head.php"
 ?>
+    <div class="jumbotron">
+        <div class="text-center">
+            <img src="media/logo/wdym_logo_ex_sm.png" class="rounded" alt="small logo">
+        </div>
+    </div>
 
 <?php
 // Check whether player is the judge
@@ -18,6 +23,7 @@ $judge = $current_game_data["judge"]["current_judge"];
 if ($player_name == $judge){
     include "tpl/judge.php";
 }
+
 
 // If player is the judge, show special judge screen
 else {

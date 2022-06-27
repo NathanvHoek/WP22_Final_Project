@@ -1,4 +1,4 @@
-<div id="card-container-overview">
+<div class="card-container-overview">
     <?php
     $json_file = file_get_contents("data/game/game_data.json");
     $data = json_decode($json_file, true);

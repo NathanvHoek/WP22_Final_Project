@@ -1,22 +1,22 @@
 <?php
 session_start();
-?>
-
-<?php
 include "tpl/head.php";
-include 'tpl/header.php';
+$lobby_room_PIN = $_SESSION["game_PIN"]
 ?>
 
-<?php $lobby_room_PIN = $_SESSION["game_PIN"]?>
 
-<div class="container">
-    <h1><?= $lobby_room_PIN ?></h1>
-    <div class="add-player">
-
-        <div id="welcome-player">
-            Hello there <?= $_POST["username"] ?>
+    <div class="jumbotron">
+        <div class="text-center">
+            <img src="media/logo/wdym_logo_ex_sm.png" class="rounded" alt="small logo">
         </div>
+    </div>
 
+    <div id="room-number">
+        <h1 id="room-number-text">Room number: <?= $lobby_room_PIN ?></h1>
+    </div>
+
+
+    <div class="add-player">
         <div id="player-form">
             <form id="add-player-form">
                 <div id="choose-avatar-btn">
@@ -24,12 +24,17 @@ include 'tpl/header.php';
                 </div>
                 <input type="text" id="room-pin" value="<?=$lobby_room_PIN?>" hidden>
                 <input type="text" id="avatar-input" name="avatar-src" hidden>
-                <input type="text" name="username" id="username-input" placeholder="Type your username here">
-                <button id="join-game" name="join-game">Join the game!</button>
+                <input type="text" name="username" id="username-input" class="form-control" placeholder="Type your username here">
+                <button id="join-game" class="btn btn-info" name="join-game">Join the game!</button>
             </form>
+        </div>
+
+        <div id="welcome-player">
+            <p id="greeting">Hello there <?= $_SESSION["username"] ?></p>
         </div>
     </div>
 
+    <!--    Hidden box with -->
     <div class="avatar-select" id="avatar-box">
         <div id="avatar-overview">
             <?php
@@ -43,10 +48,12 @@ include 'tpl/header.php';
             ?>
         </div>
         <div id="cancel-submit">
-            <button>Cancel</button>
-            <button>Select this avatar</button>
+            <button id="close-button" class="btn btn-danger">Cancel</button>
+            <button id="submit-avatar" class="btn btn-primary">Select this avatar</button>
         </div>
     </div>
+
+
 
 <!--    Overview with all the players, gets reloaded on submit new player -->
     <div class="player-overview">
@@ -58,18 +65,23 @@ include 'tpl/header.php';
 
         foreach ($players as $player => $player_info) {
             $avatar = $player_info["player_avatar"];
-            echo "<div class='player-div'><img src='$avatar' class='player-icon'></div><p>$player</p>";
+            echo "<div class='player-div'>";
+            echo "<div class='player-icon'>";
+            echo "<img src='$avatar' class='player-icon'>";
+            echo "</div>";
+            echo "<p>$player</p>";
+            echo "</div>";
         }
         ?>
 
-        <form id="start-game-form" action="start_game.php" method="post">
-            <input type="text" id="join-code" value="<?= $lobby_room_PIN ?>" hidden>
-            <button id="start-game" class="btn btn-light article_edit">Start the game</button>
-        </form>
+
 
     </div>
-</div>
 
+    <form id="start-game-form" action="start_game.php" method="post">
+        <input type="text" id="join-code" value="<?= $lobby_room_PIN ?>" hidden>
+        <button id="start-game" class="btn btn-light article_edit">Start the game</button>
+    </form>
 
 <?php
 include "tpl/end.php"

@@ -1,20 +1,37 @@
 <?php
 session_start();
 include "tpl/head.php";
-include "tpl/header.php";
 ?>
+    <div class="jumbotron">
+        <div class="text-center">
+            <img src="media/logo/wdym_logo_ex_sm.png" class="rounded" alt="small logo">
+        </div>
+    </div>
 
-<div class="container">
-    <h1>Distributing the captions cards...</h1>
+    <div class="distribute-cards-container">
+    <div class="header">
+        <h1>Distributing the captions cards...</h1>
+    </div>
 
-    <?php
+    <div id="card-animation">
+        <?php
+        for ($i=1; $i < 7; $i++){
+            echo "<div class='cards' id='card$i'>";
+            echo "<img src='media/logo/wdym_logo_small.png' alt='card' style='width:100%'>";
+            echo "</div>";
+        }
+        ?>
+    </div>
+
+
+<?php
     $json_file_players = file_get_contents("data/game/game_data.json");
     $games = json_decode($json_file_players, true);
 
     $status = $games[$_SESSION["game_PIN"]]["status"];
+    echo $games[$_SESSION["game_PIN"]]["round"]["round_info"];
 
     if ($games[$_SESSION["game_PIN"]]["status"] == "inactive") {
-//        echo "Changing the cards";
         // Change status to active (other players won't overwrite the distribution when their script is called)
         $games[$_SESSION["game_PIN"]]["status"] = "active";
 
@@ -25,6 +42,13 @@ include "tpl/header.php";
 
         // Open player data info
         $players = $games[$_SESSION["game_PIN"]]["player_data"];
+
+        // Create first round
+        $games[$_SESSION["game_PIN"]]["round"]["round_info"] =
+            ["1" =>
+            ["current_image" => "",
+                "submitted" => [],
+                "winner" => []]];
 
         // Get array with all captions for first round
         $player_count = count($players);
@@ -46,11 +70,8 @@ include "tpl/header.php";
             for ($i = 0; $i < $caption_amount; $i++){
                 $player_captions[] = array_pop($caption_array);
             }
-            print_r($games[$_SESSION["game_PIN"]]["player_data"][$player]["captions"]);
             $games[$_SESSION["game_PIN"]]["player_data"][$player]["captions"] = $player_captions;
         }
-
-//        print_r($players);
 
         // Set judge all_player names
         $game_data = $games[$_SESSION["game_PIN"]];
@@ -75,7 +96,7 @@ include "tpl/header.php";
         }
 ?>
 
-</div>
+
 <?php
 header("refresh:3; url= game.php");
 ?>
