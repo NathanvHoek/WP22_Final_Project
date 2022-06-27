@@ -42,7 +42,7 @@ include "tpl/head.php";
 
         // Open player data info
         $players = $games[$_SESSION["game_PIN"]]["player_data"];
-
+        $_SESSION["round"] = 1;
         // Create first round
         $games[$_SESSION["game_PIN"]]["round"]["round_info"] =
             ["1" =>

@@ -14,7 +14,6 @@ $judge_remaining = $game_data["judge"]["remaining_judges"];
 // Candidate list is empty then copy from players list
 
 if (empty($games[$_SESSION["game_PIN"]]["judge"]["remaining_judges"])) {
-    echo "YESS EMPTY";
     $games[$_SESSION["game_PIN"]]["judge"]["remaining_judges"] = $games[$_SESSION["game_PIN"]]["judge"]["all_players"];
 }
 

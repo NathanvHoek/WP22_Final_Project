@@ -40,7 +40,7 @@ function showAvatarsIcon(){
 
 function chooseAvatar(){
     $("#avatar-overview .small-avatars").click(function () {
-        $("#avatar-overview .small-avatars").css("border", "5px solid black");
+        $("#avatar-overview .small-avatars").css("border", "5px solid white");
         $(this).css("border", "5px solid green");
         $("#submit-avatar").data("image", $(this).attr('src'))
     })
@@ -48,7 +48,7 @@ function chooseAvatar(){
 
 function closeButtonAvatar() {
     $("#close-button").click(function () {
-        $("#avatar-overview .small-avatars").css("border", "5px solid black");
+        $("#avatar-overview .small-avatars").css("border", "5px solid white");
         $("#avatar-box").hide();
     })
 }
@@ -62,9 +62,11 @@ function selectButtonAvatar() {
     })
 }
 
-function startGame(){
+function startGameButton(){
     $("#start-game").click(function () {
-        console.log("Start game")
+        $.getJSON("./data/game/game_data.json", function (json) {
+
+        })
     })
 }
 
@@ -412,8 +414,6 @@ $(function () {
     sync_winner()
 
 
-
-
     setInterval(function () {
         let all_cards = $('#all-captions-final').children('div');
         console.log("WORKING")
@@ -435,5 +435,31 @@ $(function () {
             }
         })
     }, 500)
+
+    setInterval(function () {
+        $.getJSON("./data/game/game_data.json", function (json) {
+            let PIN = $("#selected-caption-code").val();
+            let status = json[PIN]["current_image"];
+            if (status === "clicked"){
+                $("#next-round").submit()
+            }
+            // let rounds = Object.keys(images).length
+            // if
+            // for ([player, info] of Object.entries(images)){
+            //     if (info["status"] === "open"){
+            //         for (let i = 0; i < all_cards.length; i++){
+            //             let name = all_cards[i].firstChild.value;
+            //             if (player === name) {
+            //                 console.log("YASSS")
+            //                 let id = $("#" + all_cards[i].id);
+            //                 id.children("span").addClass("is-flipped");
+            //                 // console.log($("#" +id).children("span"))
+            //                 id.children("span").children('div').addClass("is-flipped");
+            //             }
+            //         }
+            //     }
+            // }
+        })
+    }, 100)
 
 })

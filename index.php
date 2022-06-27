@@ -1,26 +1,25 @@
 <?php
-include "tpl/head.php"
+$title = "What do you meme?";
+include "tpl/head.php";
+include "tpl/header.php";
 ?>
 
     <!--Start or join the game-->
-    <div class="jumbotron">
-        <div class="text-center">
-            <img src="media/logo/wdym_logo_small.png" class="rounded" alt="...">
-        </div>
 
-        <div>
-            <form class="form-inline text-center" action="./create_room.php" method="post">
-                <a href="create_room.php"><button type="button" id="start-game" class="btn btn-warning btn-lg" >Start new game</button></a>
-                <h2 id="or_text">OR</h2>
-                <div class="input-group">
-                        <div class="input-group-btn">
-                            <input type="number" name="join-code" id="join-code" class="form-control" placeholder="Enter a room code">
-                            <button type="submit" id="pin-join-button" class="inactive btn btn-info" disabled>Join</button>
-                        </div>
-                </div>
-            </form>
-        </div>
+
+    <div>
+        <form class="form-inline text-center" action="./create_room.php" method="post">
+            <a href="create_room.php"><button type="button" id="start-game" class="btn btn-warning btn-lg" >Start new game</button></a>
+            <h2 id="or_text">OR</h2>
+            <div class="form-group">
+                <input type="number" name="join-code" id="join-code" class="form-control" placeholder="Enter a room code" required>
+                <div class="input-group-btn">
+                    <button type="submit" id="pin-join-button" class="inactive btn btn-info" disabled>Join</button>
+              </div>
+            </div>
+        </form>
     </div>
+
 
     <!--Explanation-->
     <div class="container-fluid"
