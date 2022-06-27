@@ -12,12 +12,21 @@ include "tpl/head.php"; ?>
 
 <?php
 if (empty($_POST["join-code"])){
+//<<<<<<< HEAD
     echo "<div class='header'>";
     echo "<h1>Creating a new room</h1>";
     echo "</div>";
+//=======
+    echo "<div class='header-loading'
+    <h1>Creating a room...</h1></div>";
+//>>>>>>> 457873aa3932af410666d1803e554a43154d4acd
 
     // Create random room number and assign to session variable
     $game_PIN = mt_rand(1111111, 9999999);
+//<<<<<<< HEAD
+//=======
+    echo "<div class='room-number'>$game_PIN</div>";
+//>>>>>>> 457873aa3932af410666d1803e554a43154d4acd
     $_SESSION["game_PIN"] = $game_PIN;
 
 
@@ -48,12 +57,20 @@ if (empty($_POST["join-code"])){
 }
 
 else {
-    echo "<h1>Join a room</h1>";
+    echo "<div class='header-loading'
+    <h1>Joining a room...</h1></div>";
     $_SESSION["game_PIN"] = $_POST["join-code"];
 }
 
 ?>
 
+<!--<<<<<<< HEAD-->
+<!--=======-->
+<div class="loader"></div>
+
+
+
+<!-- 457873aa3932af410666d1803e554a43154d4acd-->
 <?php
 header("refresh:2; url= lobby.php");
 include "tpl/end.php";

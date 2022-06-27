@@ -62,6 +62,29 @@ a {
   background-color: ghostwhite;
 }
 
+/*<<<<<<< HEAD*/
+/*=======*/
+.head {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  background-color: #f4f3fb;
+  color: #bc2da4;
+  padding: 25px 0px;
+  font-size: 10px;
+  margin-top: 50px;
+}
+
+.maker {
+  width: 100vw;
+  height: 250px;
+  font-size: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+/*>>>>>>> 457873aa3932af410666d1803e554a43154d4acd*/
 
 
 
@@ -296,6 +319,7 @@ a {
 .header {
   display: flex;
   justify-content: center;
+/*<<<<<<< HEAD*/
   padding: 50px 0px;
 }
 
@@ -304,6 +328,28 @@ a {
 
 #card-animation{
     margin-left: 10%;
+=======
+  height: 50px;
+  width: 50px;
+  background-color: lightgrey;
+  border-radius: 50%;
+  border: 3px solid purple;
+  cursor: pointer;
+}
+
+.small-avatars {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  cursor: pointer;
+  margin: 5px;
+  border: 2px solid #9fdfe1;
+  transition: transform .2s;
+}
+
+.small-avatars:hover {
+  transform: scale(1.25); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+/*>>>>>>> 457873aa3932af410666d1803e554a43154d4acd*/
 }
 
 .cards {
@@ -521,6 +567,7 @@ a {
   font-size: 30px;
 }
 
+/*<<<<<<< HEAD*/
 #selected-caption-div {
   height: 100px;
   margin-top: 20px;
@@ -531,6 +578,36 @@ a {
 #selected-caption-div p {
   font-size: 20px;
   text-align: center;
+}
+#avatar-box {
+   border-radius: 20px;
+   overflow-y: auto;
+   display: flex;
+   flex-wrap: wrap;
+   background-color: #9fdfe1;
+   border: 5px solid purple;
+   justify-content: space-evenly;
+   padding: 20px 30px;
+   position: fixed;
+   width: 500px;
+   height: 250px;
+   z-index: 1;
+   top: 50%;
+   left: 50%;
+   margin-top: -100px; /* Negative half of height. */
+   margin-left: -250px; /* Negative half of width. */
+ }
+
+#avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transition: transform .2s;
+}
+
+#avatar:hover {
+  transform: scale(1.25); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+>>>>>>> 457873aa3932af410666d1803e554a43154d4acd
 }
 
 #choice {
@@ -582,6 +659,10 @@ a {
 
 .card p {
   color: white;
+=======
+  width: 100%;
+  background-color: #9fdfe1;
+>>>>>>> 457873aa3932af410666d1803e554a43154d4acd
 }
 
 /*.card img {*/
@@ -598,6 +679,46 @@ button {
   border-radius: 20px;
 }
 
+.header-loading {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  background-color: purple;
+  color: white;
+  padding: 25px 0;
+  font-size: 40px;
+  margin-top: 50px;
+}
+
+.room-number {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+  color: purple;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.loader {
+  position: fixed;
+  z-index: 999;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  border: 10px solid #f3f3f3; /* Light grey */
+  border-top: 10px solid purple; /* Blue */
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 .scene {
   display: inline-block;

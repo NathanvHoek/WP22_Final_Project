@@ -4,7 +4,36 @@ include "tpl/head.php";
 $lobby_room_PIN = $_SESSION["game_PIN"]
 ?>
 
+<<<<<<< HEAD
 
+=======
+<?php $lobby_room_PIN = $_SESSION["game_PIN"]?>
+
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-left">
+                    <li ><a href="index_test.php">HOME</a></li>
+                    <li><a href="about.php">ABOUT</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index_test.php"">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Lobby</li>
+        </ol>
+    </nav>
+>>>>>>> 457873aa3932af410666d1803e554a43154d4acd
     <div class="jumbotron">
         <div class="text-center">
             <img src="media/logo/wdym_logo_ex_sm.png" class="rounded" alt="small logo">
@@ -54,9 +83,14 @@ $lobby_room_PIN = $_SESSION["game_PIN"]
     </div>
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 457873aa3932af410666d1803e554a43154d4acd
 <!--    Overview with all the players, gets reloaded on submit new player -->
     <div class="player-overview">
+
+
         <?php
         $json_file = file_get_contents("data/game/game_data.json");
         $all_games = json_decode($json_file, true);
@@ -73,8 +107,12 @@ $lobby_room_PIN = $_SESSION["game_PIN"]
             echo "</div>";
         }
         ?>
+<<<<<<< HEAD
 
-
+=======
+<!--Alles na bovenstaand stukje code wordt niet geladen.-->
+        <button id="start-game" class="btn btn-light article_edit"><a href="distribute_cards.php"> Start the game</a></button>
+>>>>>>> 457873aa3932af410666d1803e554a43154d4acd
 
     </div>
 
@@ -82,6 +120,20 @@ $lobby_room_PIN = $_SESSION["game_PIN"]
         <input type="text" id="join-code" value="<?= $lobby_room_PIN ?>" hidden>
         <button id="start-game" class="btn btn-light article_edit">Start the game</button>
     </form>
+
+
+
+
+<div class="container-fluid">
+    <footer class="py-3 my-4">
+        <ul class="nav text-center border-bottom pb-3 mb-3">
+            <li class="nav-item"><a href="index_test.php" class="nav-link px-2 text-muted">Home</a></li>
+            <li class="nav-item"><a href="about.php" class="nav-link px-2 text-muted">About</a></li>
+        </ul>
+        <p class="text-center text-muted">© 2022 Copyright:Tariq Ballout, Nathan van Hoek, Simon van Loon</p>
+    </footer>
+</div>
+
 
 <?php
 include "tpl/end.php"
