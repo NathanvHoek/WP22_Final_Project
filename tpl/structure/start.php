@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="css/index_style.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/card_flip.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Gothic&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/main.js"></script>
 </head>

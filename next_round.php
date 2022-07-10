@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "head.php";?>
+include "start.php";?>
 
     <div class="jumbotron">
         <div class="text-center">
