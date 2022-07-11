@@ -1,26 +1,19 @@
-
 <?php
 session_start();
+include "./tpl/structure/start.php";
+include "./tpl/components/header.php";
 
-include "tpl/head.php"; ?>
-
-<div class="jumbotron">
-    <div class="text-center">
-        <img src="media/logo/wdym_logo_ex_sm.png" class="rounded" alt="small logo">
-    </div>
-</div>
-
-<?php
 if (empty($_POST["join-code"])){
-    echo "<div class='header-loading'
-    <h1>Creating a room...</h1></div>";
+    echo "<div class='header-loading'>
+                <h1>Creating a room...</h1>
+          </div>";
 
     // Create random room number and assign to session variable
     $game_PIN = mt_rand(1111111, 9999999);
     $_SESSION["game_PIN"] = $game_PIN;
 
     // Open data file and write basic game structure to the file
-    $json_file = file_get_contents("data/game/game_data.json");
+    $json_file = file_get_contents("./data/game/game_data.json");
     $game_data = json_decode($json_file, true);
 
     $game_data[$game_PIN] = [
@@ -33,10 +26,15 @@ if (empty($_POST["join-code"])){
         ],
         "round" => [
             "number" => 1,
+            "max_rounds" => 0,
             "round_info" => []
         ],
-        "current_image" => "",
-        "caption_cards_submitted" => []
+        "used_elements" => [
+                "avatars" => [],
+                "images" => [],
+                "gif" => [],
+                "captions" => []
+        ]
     ];
 
     // Save to external file
@@ -47,14 +45,17 @@ if (empty($_POST["join-code"])){
 
 else {
     $game_PIN = $_POST["join-code"];
-    echo "<div class='header-loading'<h1>Joining room $game_PIN...</h1></div>";
-    $_SESSION["game_PIN"] = $_POST["join-code"];
+    echo "<div class='header-loading gothic-font'>
+                <h1>Joining room $game_PIN...</h1>
+          </div>";
+
+    $_SESSION["game_PIN"] = $game_PIN;
 }
 ?>
 
 <div class="loader"></div>
 
 <?php
-header("refresh:2; url= lobby.php");
-include "tpl/end.php";
+header("refresh:3; url= ./lobby.php");
+include "./tpl/structure/end.php";
 ?>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "tpl/head.php";
+include "tpl/structure/start.php";
 ?>
     <div class="jumbotron">
         <div class="text-center">
@@ -9,18 +9,19 @@ include "tpl/head.php";
     </div>
 
     <div class="distribute-cards-container">
-    <div class="header">
-        <h1>Distributing the captions cards...</h1>
-    </div>
+        <div class="header">
+            <h1>Distributing the captions cards...</h1>
+        </div>
 
-    <div id="card-animation">
-        <?php
-        for ($i=1; $i < 7; $i++){
-            echo "<div class='cards' id='card$i'>";
-            echo "<img src='media/logo/wdym_logo_small.png' alt='card' style='width:100%'>";
-            echo "</div>";
-        }
-        ?>
+        <div id="card-animation">
+            <?php
+            for ($i=1; $i < 7; $i++){
+                echo "<div class='cards' id='card$i'>";
+                echo "<img src='media/logo/wdym_logo_small.png' alt='card' style='width:100%'>";
+                echo "</div>";
+            }
+            ?>
+        </div>
     </div>
 
 
@@ -32,6 +33,7 @@ include "tpl/head.php";
     if ($games[$_SESSION["game_PIN"]]["status"] == "inactive") {
         // Change status to active (other players won't overwrite the distribution when their script is called)
         $games[$_SESSION["game_PIN"]]["status"] = "active";
+        $games[$_SESSION["game_PIN"]]["round"]["max_rounds"] = intval($_POST["total_rounds"]);
 
         // Open images file
         $json_file_cap = file_get_contents("data/content/captions.json");
@@ -40,11 +42,13 @@ include "tpl/head.php";
 
         // Open player data info
         $players = $games[$_SESSION["game_PIN"]]["player_data"];
-        $_SESSION["round"] = 1;
+
         // Create first round
         $games[$_SESSION["game_PIN"]]["round"]["round_info"] =
             ["1" =>
-            ["current_image" => "",
+            ["players" => [],
+                "round_status" => "proceeding",
+                "current_image" => "",
                 "submitted" => [],
                 "winner" => []]];
 
@@ -93,6 +97,8 @@ include "tpl/head.php";
         header("refresh:3; url= game.php");
 
         }
+
+    $_SESSION["round"] = 1;
 ?>
 
 
@@ -101,5 +107,5 @@ header("refresh:3; url= game.php");
 ?>
 
 <?php
-include "tpl/end.php";
+include "tpl/structure/end.php";
 ?>

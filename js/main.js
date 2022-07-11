@@ -1,36 +1,92 @@
 //////////////////////////////////////////////////////////////////
 /////////////////////////// INDEX PAGE ///////////////////////////
 //////////////////////////////////////////////////////////////////
-
-function toggleJoinButton(room_exists, PIN) {
-    let join_button = $("#pin-join-button")
-    console.log(PIN)
-    if (room_exists){
-            join_button.attr("disabled", false);
-    }
-    else {
-        join_button.attr("disabled", true);
-    }
-}
-
-
 function checkPIN() {
     let PIN = $("#join-code").val();
     let room_exists = false;
     $.getJSON("data/game/game_data.json", function (json) {
-       if (json[PIN]) {
-           room_exists = true;
-       }
-       console.log(typeof PIN)
-       toggleJoinButton(room_exists, PIN)
+        if (json[PIN] && json[PIN]["status"] === "inactive") {
+            room_exists = true;
+        }
+        toggleJoinButton(room_exists)
     })
+}
 
+function toggleJoinButton(room_exists) {
+    let join_button = $("#pin-join-btn")
+    if (room_exists) {
+        join_button.attr("disabled", false);
+    } else {
+        join_button.attr("disabled", true);
+    }
 }
 
 
 //////////////////////////////////////////////////////////////////
 /////////////////////////// LOBBY PAGE ///////////////////////////
 //////////////////////////////////////////////////////////////////
+
+function slider() {
+    let slider = document.getElementById("rangeSlider");
+    let outputEl = document.querySelector(".range-slider__value");
+    let outputRounds = document.querySelector(".range-slider__rounds");
+    let formoutput = document.getElementById("total_rounds");
+    let PIN = $("#game-pin").val()
+    outputEl.textContent = slider.value;
+
+    $.getJSON("./data/game/game_data.json", function (json) {
+        let amount_players = Object.keys(json[PIN]["player_data"]).length;
+        outputRounds.textContent = amount_players;
+        formoutput.value = amount_players;
+
+        slider.oninput = function () {
+            outputEl.textContent = this.value;
+            let total_rounds = parseInt(this.value) * amount_players;
+            outputRounds.textContent = total_rounds.toString();
+            formoutput.value = total_rounds.toString();
+    }})
+    };
+
+
+function checkPlayerInput(){
+    let PIN = $("#game-pin").val();
+    let username = $("#username-input").val();
+    let avatar = $("#avatar-input").val();
+    console.log(PIN)
+    $.getJSON("./data/game/game_data.json", function (json) {
+        if (
+            (username !== "") &&
+            (username.length < 30) &&
+            (!json[PIN]["player_data"][username]) &&
+            (avatar !== "empty")
+            ){
+            $("#join-game").attr("disabled", false);
+            console.log("YAYYY OMGGG")
+        } else {
+            $("#join-game").attr("disabled", true);
+            console.log("BUT WHYY")
+        }
+    })
+}
+
+function startGameMinimumPlayers(){
+    setInterval(function () {
+        let PIN = $("#game-pin").val();
+        $.getJSON("./data/game/game_data.json", function (json) {
+            if (Object.keys(json[PIN]["player_data"]).length > 1){
+                $("#start-game").attr("disabled", false);
+            } else {
+                $("#start-game").attr("disabled", true);
+            }
+        })
+    }, 2000)
+}
+
+function openRound() {
+    $("#start-game").click(function () {
+        $("#amount-round-div").show();
+    })
+}
 
 // Selecting avatar
 function showAvatarsIcon(){
@@ -63,53 +119,21 @@ function selectButtonAvatar() {
     })
 }
 
-function disableButton() {
-    let input = document.querySelector("#username-input")
-    let button = document.querySelector("#join-game")
 
-    button.disabled = true
-
-    input.addEventListener("change", stateHandle)
-
-    function stateHandle() {
-        button.disabled = document.querySelector("#username-input").value === "";
-    }
-}
-
-
-function startGameButton(){
-    $("#start-game").click(function () {
-        $.getJSON("./data/game/game_data.json", function (json) {
-
-        })
-    })
-}
-
-// ---------- ADD PLAYER FORM ----------
 function hideForm(){
+    let PIN = $("#game-pin-lobby").val();
     $("#welcome-player").hide()
     $("#join-game").click(function (){
-        $("#welcome-player").show()
+        $.getJSON("./data/game/game_data.json", function (json) {
+            console.log(json[PIN]["player_data"])
+            if (json[PIN]["player_data"].length < 1){
+                $("#start-game").attr("disabled", false);
+            }
+    })
         $("#player-form").hide()
     })
 }
 
-// async function checkUsername() {
-//     let username = $("#username-input").val()
-//     let response = await fetch("data/player_data.json");
-//     let players = await response.json();
-//
-//     for (let i = 0; i < players.length; i++) {
-//         let player_name = players[i]["player_name"];
-//         if (username === player_name) {
-//             $("#username-input").css("border", "3px solid red");
-//             return false;
-//         }
-//         else if (username === ""){
-//             $("#username-input").css("border", "1px solid green");
-//             return false;
-//         }
-// }
 
 function submitPlayerForm(){
     $("#join-game").click(function (event) {
@@ -129,18 +153,41 @@ function submitPlayerForm(){
 
             event.preventDefault();
             $("#avatar-box").hide();
+            $("#add-player-container").hide();
 
             setTimeout(function () {
-                $(".player-overview").load(window.location.href + " .player-overview")
+                $(".player-overview-div").load(window.location.href + " .player-overview")
             }, 100)
-    });
-}
+            
+            // setTimeout(function () {
+            //     $.getJSON("./data/game/game_data.json", function (json) {
+            //         console.log(json[$("#room-pin").val()]["player_data"])
+            //         if (json[$("#room-pin").val()]["player_data"].length < 1){
+            //             $("#start-game").attr("disabled", false);
+            //         }
+            // })
+            // },100);
+})}
+
 
 //////////////////////////////////////////////////////////////////
 /////////////////////////// JURY PAGE ////////////////////////////
 //////////////////////////////////////////////////////////////////
 
-function chooseImage(){
+function switchTabs() {
+    const tabs = document.querySelectorAll('[data-tab-target]');
+    const tabContents = document.querySelectorAll('[data-tab-content]')
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = document.querySelector(tab.dataset.tabTarget);
+            tabContents.forEach(tabContent => tabContent.classList.remove('active-div'));
+            target.classList.add('active-div');
+        })
+    })
+}
+
+
+function chooseMainImage(){
     $(".judge-images .choose-picture").click(function () {
         if ($(this).hasClass("active")) {
             $(this).removeClass("active");
@@ -158,6 +205,7 @@ function chooseImage(){
 
 
 function submitMainImage(){
+    $("#main-image-div").hide()
     $("#choose-main-image").submit(function (event) {
         let formData = {
             main_image: $("#main-image").val(),
@@ -174,48 +222,92 @@ function submitMainImage(){
         })
         event.preventDefault();
         console.log(formData)
-        setTimeout(function (){$(".judge-main-image").load(window.location.href + " .judge-main-image")}, 10)
-        $("#judge-overview").show()
-        $("#chosen-image").show()
-        $("#selected-captions-overview").show()
-        $("#choose-main-image").hide()
+
+        $("#selected-captions-overview").show();
+        setTimeout($("#main-image-div").load(window.location.href + " #main-image-div").css("display", "block"), 100);
+        $("#choose-image-div").hide();
 
     });
 }
 
-function flipCard() {
-    $('.flip-card').click(function () {
-        if (!$(this).hasClass("is-flipped")){
-            $(this).addClass("is-flipped")
-            let player = $(this).children(".card__face--back").children("p")[1].innerText;
-            let formData = {
-                card_player: player,
-                game_PIN: $("#game_pin").val()
-            };
-            $.ajax({
-                type: "POST",
-                url: "./scripts/sync_card_status.php",
-                data: formData,
-                dataType: "json",
-                encode: true,
-            })
+function uploadImage() {
+    $("#but_upload").click(function(){
+        let fd = new FormData();
+        let files = $('#file')[0].files;
+        let pin = $("#game-pin").val();
+        console.log(pin)
+        // Check file selected or not
+        if(files.length > 0 ){
+            fd.append('file', files[0]);
+            fd.append('game_PIN', pin);
 
-            let all_cards = $("#all-captions-final").children("div");
-            let complete = true;
-            for (let i = 0; i < all_cards.length; i++){
-                if (!all_cards[i].children("span").hasClass("is-flipped"))
-                    complete = false
-            }
-            console.log(complete)
-            if (complete === true){
-                $("#choose-winner").show()
-            }
+            $.ajax({
+                url: './scripts/upload_img.php',
+                type: 'post',
+                data: fd,
+                contentType: false,
+                processData: false,
+                success: function(response){
+                    if(response !== 0){
+                        $("#img").attr("src", response);
+                        $(".preview img").show(); // Display image element
+                    } else{
+                        alert('file not uploaded');
+                    }
+                },
+            });
+        }else{
+            alert("Please select a file.");
         }
+})}
+
+function copyToClipboard(){
+    $("#copy-clipboard").click(function () {
+        let input = document.body.appendChild(document.createElement("input"));
+        input.value = $("#code").text();
+        input.focus();
+        input.select();
+        document.execCommand('copy');
+        input.parentNode.removeChild(input);
+    })
+}
+
+function flipCard() {
+    $(this).css("border", "3px red solid")
+    $('.flip-card').click(function () {
+            if (!$(this).hasClass("is-flipped")){
+                $(this).addClass("is-flipped")
+                let player = $(this).children(".card__face--back").children("p")[1].innerText;
+                let formData = {
+                    card_player: player,
+                    game_PIN: $("#game_pin").val()
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "./scripts/sync_card_status.php",
+                    data: formData,
+                    dataType: "json",
+                    encode: true,
+                })
+
+                let all_cards = $("#all-captions-final").children("div");
+                let complete = true;
+                for (let i = 0; i < all_cards.length; i++){
+                    if (!all_cards[i].children("span").hasClass("is-flipped"))
+                        complete = false
+                }
+
+                if (complete === true){
+                    $("#choose-winner").show()
+                }
+            }
     });
 }
 
 function selectWinner() {
     $("#all-captions-final .card__face--back").click(function () {
+        console.log($(this))
         let selected_text = $(this).children("p")[0].innerText;
         let winner = $(this).children("p")[1].innerText;
         $("#all-captions-final .card__face--back").css("border", "3px solid black")
@@ -227,7 +319,7 @@ function selectWinner() {
 }
 
 function submitWinner() {
-    $("#show-winner").hide()
+    $("#show-winner-div").hide()
     $("#next-round").hide()
     $("#winner-caption-btn").click(function (event) {
         let formData = {
@@ -244,24 +336,24 @@ function submitWinner() {
             encode: true,
         })
         event.preventDefault();
-        $("#show-winner").load(window.location.href + " #show-winner").show()
+        $("#show-winner-div").load(window.location.href + " #show-winner-div").show()
         // $("#show-winner").show()
     })
 }
+
 
 //////////////////////////////////////////////////////////////////
 ////////////////////////// PLAYER PAGE ///////////////////////////
 //////////////////////////////////////////////////////////////////
 function selectImage() {
-
-    $(".card-container-overview .card").click(function () {
-        let selected_text = $(this).children("p")[0].innerText;
-        $(".card-container-overview .card").css("border", "3px solid purple")
-        $(this).css("border", "3px solid green");
-        $("#selected-caption").text(selected_text);
-        $("#selected-caption-input").val(selected_text)
-        $("#submit-caption").show();
-    })
+        $(".card-container-overview .card").click(function () {
+            if ($(".announce").length === 0){let selected_text = $(this).children("p")[0].innerText;
+            $(".card-container-overview .card").css("border", "3px solid purple")
+            $(this).css("border", "3px solid green");
+            $("#selected-caption").text(selected_text);
+            $("#selected-caption-input").val(selected_text)
+            $("#submit-caption").show();
+        }})
 }
 
 function submitImage() {
@@ -271,7 +363,6 @@ function submitImage() {
             name: $("#selected-caption-named").val(),
             code: $("#selected-caption-code").val()
         };
-        console.log(formData)
 
         $.ajax({
             type: "POST",
@@ -280,6 +371,7 @@ function submitImage() {
             dataType: "json",
             encode: true,
         })
+
         event.preventDefault();
         setTimeout(function (){$(".judge-main-image").load(window.location.href + " .judge-main-image")}, 100)
         $("#selected-captions-overview").show()
@@ -292,32 +384,14 @@ function submitImage() {
 
 function sync_winner(){
     setInterval(function () {
-        if ($("#show-winner").attr("display", "none")){
+        if ($("#show-winner-div").attr("display", "none")){
             $.getJSON("./data/game/game_data.json", function (json) {
                 let PIN = $("#selected-caption-code").val();
                 let round = json[PIN]["round"]["number"];
                 let key = Object.keys(json[PIN]["round"]["round_info"][round]["winner"]).length;
                 if (key === 1){
-                    console.log("YAYYYY")
                     console.log(json[PIN]["round"]["round_info"][round]["winner"].length)
-                    $("#show-winner").load(window.location.href + " #show-winner").show()
-                }
-            })
-        }
-    }, 1000)
-}
-
-function nextRound(){
-    setInterval(function () {
-        if ($("#show-winner").attr("display", "none")){
-            $.getJSON("./data/game/game_data.json", function (json) {
-                let PIN = $("#selected-caption-code").val();
-                let round = json[PIN]["round"]["number"];
-                let key = Object.keys(json[PIN]["round"]["round_info"][round]["winner"]).length;
-                if (key === 1){
-                    console.log("YAYYYY")
-                    console.log(json[PIN]["round"]["round_info"][round]["winner"].length)
-                    $("#show-winner").load(window.location.href + " #show-winner").show()
+                    $("#show-winner-div").load(window.location.href + " #show-winner-div").show()
                 }
             })
         }
@@ -325,83 +399,7 @@ function nextRound(){
 }
 
 
-//////////////////////////////////////////////////////////////////
-////////////////////////////// MAIN //////////////////////////////
-//////////////////////////////////////////////////////////////////
-
-$(function () {
-
-    // Index page
-    $("#join-code").keyup(function () {
-        checkPIN();
-    })
-
-
-    // Lobby page
-    closeButtonAvatar()
-    selectButtonAvatar()
-
-    $("#username-input").keyup(function () {
-        checkUsername()
-    });
-
-    disableButton()
-
-    $("#judge-overview").hide()
-
-    hideForm()
-
-
-    if (window.location.href.endsWith("lobby.php")){
-        setInterval(function () {
-                $(".player-overview").load(window.location.href + " .player-overview")}
-            , 2000);
-
-        setInterval(function () {
-                $.getJSON("data/game/game_data.json", function (json) {
-                    let PIN = $("#join-code").val();
-                    if (json[PIN]["status"] === "active") {
-                        $("#start-game-form").submit();
-                    }
-                })}
-            , 500);
-    }
-
-    submitPlayerForm()
-    $("#avatar-box").hide()
-    showAvatarsIcon()
-    chooseAvatar()
-    // startGame()
-
-    setInterval(function () {
-            $("#chosen-image").load(window.location.href + " #chosen-image")}
-        , 2000);
-    // setInterval(function () {
-    //         $("#selected-captions-overview").load(window.location.href + " #selected-captions-overview")}
-    //     , 2000);
-
-
-
-
-
-
-    // Player functions
-    // $("#next-round").hide()
-    $("#submit-caption").hide();
-
-    ///////////// Judge functions /////////////
-    // Choosing the main picture
-    chooseImage()
-    $("#choose-winner").hide()
-    $("#selected-captions-overview").hide()
-    $("#show-winner").hide()
-    submitWinner()
-    selectWinner()
-    selectImage()
-    submitImage()
-    submitMainImage()
-    sync_winner()
-    // Sync cards
+function sync_cards() {
     setInterval(function () {
             if ($("#all-captions-final").length === 0){
                 $("#selected-captions-overview").load(window.location.href + " #selected-captions-overview")
@@ -427,15 +425,104 @@ $(function () {
             }
         }
         , 500);
+}
+
+
+function nextRound(){
+    setInterval(function () {
+            $.getJSON("data/game/game_data.json", function (json) {
+                let PIN = $("#game-pin").val();
+                let round = $("#round-num").val();
+                let round_status = json[PIN]["round"]["round_info"][round]["round_status"];
+                console.log(round_status)
+                if (round_status === "finished"){
+                    $("#next-round").submit()
+                }
+            })
+    }, 1000)
+}
+
+
+//////////////////////////////////////////////////////////////////
+////////////////////////////// MAIN //////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+$(function () {
+
+    // INDEX PAGE
+    $("#join-code").keyup(function () {
+        checkPIN();
+    })
+
+
+    // THE LOBBY PAGE
+    closeButtonAvatar()
+    selectButtonAvatar()
+
+    $("#username-input").keyup(function () {
+        checkPlayerInput()
+    });
+
+    $("#cancel-submit button").click(function () {
+        checkPlayerInput()
+    })
+
+    startGameMinimumPlayers()
+
+
+    if (window.location.href.endsWith("lobby.php")){
+        setInterval(function () {
+                $(".player-overview-div").load(window.location.href + " .player-overview")}
+            , 1000);
+
+        setInterval(function () {
+                $.getJSON("data/game/game_data.json", function (json) {
+                    let PIN = $("#join-code").val();
+                    if (json[PIN]["status"] === "active") {
+                        $("#start-game-form").submit();
+                    }
+                })}
+            , 500);
+    }
+
+    submitPlayerForm()
+
+    $("#avatar-box").hide()
+    showAvatarsIcon()
+    chooseAvatar()
 
     setInterval(function () {
-        $.getJSON("./data/game/game_data.json", function (json) {
-            let PIN = $("#selected-caption-code").val();
-            let status = json[PIN]["current_image"];
-            if (status === "clicked"){
-                $("#next-round").submit()
-            }
-        })
-    }, 1000)
+            $("#chosen-image").load(window.location.href + " #chosen-image")}
+        , 2000);
 
+    $("#submit-caption").hide();
+
+
+
+    // JUDGE PAGE
+    switchTabs()
+    chooseMainImage()
+    submitMainImage()
+    selectWinner()
+    submitWinner()
+    $("#choose-winner").hide()
+    $("#selected-captions-overview").hide()
+    // $("#show-winner-div").hide()
+    // flipCard()
+
+    // PLAYER PAGE
+    selectImage()
+    submitImage()
+
+    sync_winner()
+    // Sync cards
+    sync_cards()
+    $("#judge-overview").hide()
+    nextRound()
+    hideForm()
+    copyToClipboard()
+    uploadImage()
+    slider()
+    $("#amount-round-div").hide()
+    openRound()
 })

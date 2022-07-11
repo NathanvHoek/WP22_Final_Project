@@ -1,12 +1,8 @@
 <?php
 session_start();
-include "tpl/head.php"
+include "./tpl/structure/start.php";
+include "./tpl/components/header.php";
 ?>
-    <div class="jumbotron">
-        <div class="text-center">
-            <img src="media/logo/wdym_logo_ex_sm.png" class="rounded" alt="small logo">
-        </div>
-    </div>
 
 <?php
 // Check whether player is the judge
@@ -18,26 +14,14 @@ $current_game_data = $games[$_SESSION["game_PIN"]];
 
 $judge = $current_game_data["judge"]["current_judge"];
 
-
-// If player is not the judge, show normal player screen
-if ($player_name == $judge){
-    include "tpl/judge.php";
+if ($judge == $player_name){
+    include "./tpl/components/player/judge.php";
+} else {
+    include "./tpl/components/player/player.php";
 }
-
-
-// If player is the judge, show special judge screen
-else {
-    include "tpl/player.php";
-}
-
 ?>
 
-<!--    <script>-->
-<!--        window.onbeforeunload = function(){-->
-<!--            return 'Are you sure you want to leave?';-->
-<!--        };-->
-<!--    </script>-->
-
 <?php
-include "tpl/end.php"
+include "./tpl/components/data.php";
+include "./tpl/structure/end.php";
 ?>

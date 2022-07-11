@@ -1,36 +1,24 @@
-<h1 class="player-status-message">Hey, <?= $player_name ?>, you are a player!</h1>
+<?php include "./tpl/components/dashboard.php" ?>
 
-<!--    <div class="scores">-->
-<!--        --><?php
-//        $json_file = file_get_contents("data/player_data.json");
-//        $articles = json_decode($json_file, true);
-//        foreach($articles as $player) {
-//            $player_name = $player["player_name"];
-//            $player_avatar = $player["player_avatar"];
-//            echo "<p class='score'>$player_name</p>";
-//        }
-//        ?>
-<!--    </div>-->
+    <div id="chosen-image">
+        <?php
+        $json_file = file_get_contents("./data/game/game_data.json");
+        $game_data = json_decode($json_file, true);
 
+        $round = $game_data[$_SESSION["game_PIN"]]["round"]["number"];
+        $current_image = $game_data[$_SESSION["game_PIN"]]["round"]["round_info"][$round]["current_image"];
 
-<div id="chosen-image">
-    <?php
-    $json_file = file_get_contents("data/game/game_data.json");
-    $game_data = json_decode($json_file, true);
-    $round = $game_data[$_SESSION["game_PIN"]]["round"]["number"];
-    $current_image = $game_data[$_SESSION["game_PIN"]]["round"]["round_info"][$round]["current_image"];
+        if (empty($current_image)){
+            echo "<div>
+                    <p class='wait-judge'>Wait for the judge to choose a picture</p>
+                    <div class='loader-small'></div>
+                  </div>";
 
-    if (empty($current_image)){
-        echo "<p class='announce'>Wait for the judge to choose a picture</p>";
-    } else {
-        echo "<img src='$current_image'>";
-    }
-    ?>
-</div>
-
-<div id="selected-caption-div">
-    <p id="selected-caption"></p>
-</div>
+        } else {
+            echo "<img src='$current_image'>";
+        }
+        ?>
+    </div>
 
 <div id="submit-caption">
     <form>
@@ -42,7 +30,7 @@
     </form>
 </div>
 
-<?php include "card-container.php" ?>
+<?php include "./tpl/components/card-container.php" ?>
 
 <div id="selected-captions-overview">
     <?php
@@ -82,4 +70,4 @@
     ?>
 
 </div>
-<?php include "show_winner.php";?>
+<?php include "tpl/components/show_winner.php";?>
