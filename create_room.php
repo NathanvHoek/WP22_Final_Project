@@ -28,12 +28,6 @@ if (empty($_POST["join-code"])){
             "number" => 1,
             "max_rounds" => 0,
             "round_info" => []
-        ],
-        "used_elements" => [
-                "avatars" => [],
-                "images" => [],
-                "gif" => [],
-                "captions" => []
         ]
     ];
 
@@ -45,7 +39,7 @@ if (empty($_POST["join-code"])){
 
 else {
     $game_PIN = $_POST["join-code"];
-    echo "<div class='header-loading gothic-font'>
+    echo "<div class='header-loading'>
                 <h1>Joining room $game_PIN...</h1>
           </div>";
 

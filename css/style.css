@@ -200,20 +200,13 @@ input[type=number]::-webkit-outer-spin-button {
   background-color: purple;
 }
 
-#copy-clipboard {
-  height: 30px;
-  width: 30px;
-  font-size: 10px;
-  color: black;
-  border-radius: 5px;
-  outline: none;
-  border: none;
-  margin-left: 10px;
-}
+
 
 /* ------------- Room number -------------- */
-#lobby-header > * {
-  margin: 20px;
+#lobby-header {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px;
 }
 
 #room-number-text {
@@ -226,6 +219,27 @@ input[type=number]::-webkit-outer-spin-button {
   width: fit-content;
   padding: 15px 50px;
   font-size: 1.7rem;
+  margin-left: 20px ;
+}
+
+#code {
+  margin-left: 10px;
+}
+
+#copy-clipboard {
+  height: 40px;
+  width: 40px;
+  font-size: 7px;
+  color: purple;
+  border-radius: 50%;
+  outline: none;
+  border: 3px solid white;
+  margin-left: 10px;
+}
+
+#copy-clipboard:hover {
+  background-color: transparent;
+  color: white;
 }
 
 
@@ -715,7 +729,7 @@ input[type=number]::-webkit-outer-spin-button {
 .choose-picture.active,
 .choose-picture.active:hover,
 .image-container:hover{
-  box-shadow: 0 0 15px green;
+  border: 5px solid purple;
 }
 
 .image-container {
@@ -724,7 +738,6 @@ input[type=number]::-webkit-outer-spin-button {
   align-items: center;
   width: 170px;
   height: 170px;
-  background-color: green;
   margin: 20px;
 }
 
@@ -736,6 +749,27 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 10px;
   box-shadow: 0 0 5px grey;
   flex-shrink: 0;
+}
+
+#upload-image {
+  display: flex;
+  flex-direction: column;
+}
+
+#upload-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#upload-buttons input {
+  padding: 10px;
+}
+
+#file {
+  text-align: center;
+  margin: 20px;
 }
 
 /* SEE MAIN IMAGE*/
@@ -869,6 +903,12 @@ input[type=number]::-webkit-outer-spin-button {
   background-color: purple;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+#chosen-image .loader-small {
+  position: absolute;
+  bottom: -100px;
 }
 
 #chosen-image img {
@@ -1001,10 +1041,14 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: 0 0 5px grey;
 }
 
-.center {
+.center, .center-vl {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.center-vl {
+  flex-direction: column;
 }
 
 #player-info {

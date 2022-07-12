@@ -4,11 +4,11 @@ include "./tpl/components/dashboard.php" ;
     $images = json_decode($json_file, true);
 ?>
 
-<!-- Judge sees this div first -->
+<!-- Judge sees this div first, tabs with three choices -->
 <div id="choose-image-div" class="center">
     <div id="choose-main-img">
         <ul id="choose-main-image-btns" class="center">
-            <li class="left-btn" data-tab-target="#judge-img-container">Images</li>
+            <li class="left-btn active" data-tab-target="#judge-img-container">Images</li>
             <li class="mid-btn" data-tab-target="#judge-gif-container">GIF</li>
             <li class="right-btn" data-tab-target="#judge-upload-container">Upload image</li>
         </ul>
@@ -43,14 +43,14 @@ include "./tpl/components/dashboard.php" ;
                 <div class='preview image-container'>
                     <img class="choose-picture" src="" id="img" width="100" height="100">
                 </div>
-                <div >
+                <div id="upload-buttons">
                     <input type="file" id="file" name="file" />
                     <input type="button" class="button" value="Upload" id="but_upload">
                 </div>
             </form>
         </div>
 
-
+        <!-- Submit form with data-->
         <form id="choose-main-image">
             <input type="text" id="game_PIN" name="game_PIN" value="<?= $_SESSION["game_PIN"] ?>" hidden>
             <input type="text" id="main-image" name="main-image" hidden>
@@ -58,13 +58,19 @@ include "./tpl/components/dashboard.php" ;
                 <button id="choose-image" class="btn btn-primary" name="choose-image" disabled>Choose image</button>
             </div>
         </form>
-
     </div>
 </div>
 
-<?php
-include "tpl/components/main-image.php";
-?>
+<div id="main-image-div" class="center">
+    <div id="image-div">
+        <?php
+        include "./tpl/components/json/open_game_data.php";
+        $round = $game_data[$_SESSION["game_PIN"]]["round"]["number"];
+        $current_image = $game_data[$_SESSION["game_PIN"]]["round"]["round_info"][$round]["current_image"];
+        echo "<img src='$current_image'>";
+        ?>
+    </div>
+</div>
 
 <form id="choose-winner">
     <input type="text" id="winner-caption" hidden>

@@ -2,17 +2,21 @@
 session_start();
 
 $game_PIN = $_SESSION["game_PIN"];
-$page_title = "WDYM - Waiting room $game_PIN";
+$page_title = "What Do You Meme - Lobby $game_PIN";
 
 include "tpl/structure/start.php";
-
 include "tpl/components/header.php";
 ?>
 
 <div class="background">
     <div id="lobby-header" class="center">
-        <h1 id="room-number-text" class="bold center">Room number: <span id="code"> <?= $game_PIN ?></span><button id="copy-clipboard">Copy code</button></h1>
-            <button id="start-game" class="btn btn-light article_edit bold" disabled>Continue to game</button>
+        <h1 id="room-number-text" class="bold center">Room
+            <span id="code"> <?= $game_PIN ?></span>
+            <button id="copy-clipboard">
+                <span class="material-symbols-outlined center">content_paste</span>
+            </button>
+        </h1>
+        <button id="start-game" class="btn btn-light article_edit bold" disabled>Continue to game</button>
     </div>
 
     <div id="add-player-container" class="center">
@@ -24,7 +28,7 @@ include "tpl/components/header.php";
             <input type="text" id="room-pin" name="game_pin" value="<?= $game_PIN ?>" hidden>
             <input type="text" id="avatar-input" name="avatar" value="empty" hidden>
 
-            <input type="text" name="username" id="username-input" placeholder="Type your username here">
+            <input type="text" name="username" id="username-input" maxlength="30" placeholder="Type your username here">
             <button id="join-game" class="btn btn-info bold" name="join-game" disabled>Join the game!</button>
         </form>
     </div>
@@ -42,7 +46,7 @@ include "tpl/components/header.php";
         </div>
         <div id="cancel-submit">
             <button id="close-button" class="btn btn-danger">Cancel</button>
-            <button id="submit-avatar" class="btn btn-success">Select this avatar</button>
+            <button id="submit-avatar" class="btn btn-success" disabled>Select this avatar</button>
         </div>
     </div>
 
@@ -51,23 +55,22 @@ include "tpl/components/header.php";
     <div class="player-overview-div">
         <div class="player-overview">
             <?php
-            $json_file = file_get_contents("data/game/game_data.json");
-            $game_data = json_decode($json_file, true);
-
-            $players = $game_data[$game_PIN]["player_data"];
-
-            foreach ($players as $player => $player_info) {
-                $avatar = $player_info["player_avatar"];
-                echo "<div class='player-div'>";
-                echo "<img src='$avatar' class='player-icon'>";
-                echo "<p>$player</p>";
-                echo "</div>";
-            }
+                include "./tpl/components/json/open_game_data.php";
+                $players = $game_data[$game_PIN]["player_data"];
+                foreach ($players as $player => $player_info) {
+                    $avatar = $player_info["player_avatar"];
+                    echo "<div class='player-div'>";
+                    echo "<img src='$avatar' class='player-icon'>";
+                    echo "<p>$player</p>";
+                    echo "</div>";
+                }
             ?>
         </div>
     </div>
 </div>
 
+
+<!-- Hidden initially, shown when enough players and one player clicked on "Continue to game" button-->
 <div id="amount-round-div">
     <div id="round-data">
         <?php
@@ -75,7 +78,7 @@ include "tpl/components/header.php";
         if ($decider == $_SESSION["username"]){
             echo "<h3>How many rounds do you want to play?</h3>";
             $count_players = count($game_data[$game_PIN]["player_data"]);
-            echo "<p>There are $count_players, every player should be the judge for this many times:</p>";
+            echo "<p>There are $count_players players, every player should be the judge for this many times (yes, you can type in it):</p>";
 
             echo "<form action='start_game.php' method='post' id='start-game-form'>";
             echo "<input type='number' name='timesJudge' id='timesJudge' max='5' min='1' value='1'>";
@@ -89,6 +92,7 @@ include "tpl/components/header.php";
     </div>
 
 </div>
+
 
 <?php
 include "tpl/components/data.php";

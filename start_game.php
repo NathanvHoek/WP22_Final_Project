@@ -9,7 +9,7 @@ include "tpl/structure/start.php";
     </div>
 
     <div class="distribute-cards-container">
-        <div class="header">
+        <div class="header-loading">
             <h1>Distributing the captions cards...</h1>
         </div>
 
@@ -26,39 +26,40 @@ include "tpl/structure/start.php";
 
 
 <?php
-    $json_file_players = file_get_contents("data/game/game_data.json");
-    $games = json_decode($json_file_players, true);
-    $status = $games[$_SESSION["game_PIN"]]["status"];
-    $key = array_keys($games[$_SESSION["game_PIN"]]["status"])[0];
+// Process and start new game
+    include "./tpl/components/json/open_game_data.php";
+    $status = $game_data[$_SESSION["game_PIN"]]["status"];
+    $key = array_keys($game_data[$_SESSION["game_PIN"]]["status"])[0];
 
-    if ($games[$_SESSION["game_PIN"]]["status"][$key] == "continued") {
+    if ($game_data[$_SESSION["game_PIN"]]["status"][$key] == "continued") {
+
         // Change status to active (other players won't overwrite the distribution when their script is called)
-        $games[$_SESSION["game_PIN"]]["status"] = "active";
-        $total_rounds = $_POST["timesJudge"] * count($games[$_SESSION["game_PIN"]]["player_data"]);
-        $games[$_SESSION["game_PIN"]]["round"]["max_rounds"] = $total_rounds;
+        $game_data[$_SESSION["game_PIN"]]["status"] = "active";
 
-        // Open images file
-        $json_file_cap = file_get_contents("data/content/captions.json");
-        $captions_json = json_decode($json_file_cap, true);
-        $captions = $captions_json["all_captions"];
-
-        // Open player data info
-        $players = $games[$_SESSION["game_PIN"]]["player_data"];
+        // Set total rounds
+        $total_rounds = $_POST["timesJudge"] * count($game_data[$_SESSION["game_PIN"]]["player_data"]);
+        $game_data[$_SESSION["game_PIN"]]["round"]["max_rounds"] = $total_rounds;
 
         // Create first round
-        $games[$_SESSION["game_PIN"]]["round"]["round_info"] =
+        $game_data[$_SESSION["game_PIN"]]["round"]["round_info"] =
             ["1" =>
-            ["players" => [],
-                "round_status" => "proceeding",
+            ["round_status" => "proceeding",
                 "current_image" => "",
                 "submitted" => [],
                 "winner" => []]];
 
-        // Get array with all captions for first round
+        // Open file with all captions
+        $json_file_cap = file_get_contents("data/content/captions.json");
+        $captions_json = json_decode($json_file_cap, true);
+        $captions = $captions_json["all_captions"];
+
+        // Count amount of players and therefore amount of captions to be retrieved
+        $players = $game_data[$_SESSION["game_PIN"]]["player_data"];
         $player_count = count($players);
-        $caption_amount = 7;
+        $caption_amount = 7; // Fixed amount of cards
         $caption_array = array();
-//
+
+        // Get an array with all captions randomly selected
         $count = 0;
         while ($count < ($player_count * $caption_amount)) {
             $cap_index = array_rand($captions);
@@ -68,46 +69,30 @@ include "tpl/structure/start.php";
                 $count++;
             }
         }
+
         // Distribute cards over players
         foreach ($players as $player => $player_data){
             $player_captions = [];
             for ($i = 0; $i < $caption_amount; $i++){
                 $player_captions[] = array_pop($caption_array);
             }
-            $games[$_SESSION["game_PIN"]]["player_data"][$player]["captions"] = $player_captions;
+            $game_data[$_SESSION["game_PIN"]]["player_data"][$player]["captions"] = $player_captions;
         }
 
-        // Set judge all_player names
-        $game_data = $games[$_SESSION["game_PIN"]];
-        $players = $games[$_SESSION["game_PIN"]]["player_data"];
-
-        $all_players = [];
-        foreach ($players as $player_name => $value){
-            $all_players[] = $player_name;
-        }
-
-        $games[$_SESSION["game_PIN"]]["judge"]["all_players"] = $all_players;
-        $games[$_SESSION["game_PIN"]]["judge"]["remaining_judges"] = $all_players;
-        $games[$_SESSION["game_PIN"]]["judge"]["current_judge"] = array_pop($games[$_SESSION["game_PIN"]]["judge"]["remaining_judges"]);
-
+        // Set judges initial values
+        $all_players = array_keys($players);
+        $game_data[$_SESSION["game_PIN"]]["judge"]["all_players"] = $all_players;
+        $game_data[$_SESSION["game_PIN"]]["judge"]["remaining_judges"] = $all_players;
+        $game_data[$_SESSION["game_PIN"]]["judge"]["current_judge"] = array_pop($game_data[$_SESSION["game_PIN"]]["judge"]["remaining_judges"]);
 
         // Write to JSON file
-        $json_file = fopen('data/game/game_data.json', 'w');
-        fwrite($json_file, json_encode($games));
-        fclose($json_file);
-
+        include "./tpl/components/json/close_game_data.php";
         header("refresh:3; url= game.php");
-
-        }
+    }
 
     $_SESSION["round"] = 1;
-?>
 
-
-<?php
 header("refresh:3; url= game.php");
-?>
 
-<?php
 include "tpl/structure/end.php";
 ?>

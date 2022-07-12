@@ -113,13 +113,15 @@ function chooseAvatar(){
     $("#avatar-overview .small-avatars").click(function () {
         $("#avatar-overview .small-avatars").css("border", "5px solid white");
         $(this).css("border", "5px solid green");
-        $("#submit-avatar").data("image", $(this).attr('src'))
+        $("#submit-avatar").attr("disabled", false);
+        $("#submit-avatar").data("image", $(this).attr('src'));
     })
 }
 
 function closeButtonAvatar() {
     $("#close-button").click(function () {
         $("#avatar-overview .small-avatars").css("border", "5px solid white");
+        $("#submit-avatar").attr("disabled", true);
         $("#avatar-box").hide();
     })
 }
@@ -232,7 +234,7 @@ function submitMainImage(){
         console.log(formData)
 
         $("#selected-captions-overview").show();
-        setTimeout($("#main-image-div").load(window.location.href + " #main-image-div").css("display", "block"), 100);
+        $("#main-image-div").load(window.location.href + " #main-image-div img").css("display", "block");
         $("#choose-image-div").hide();
 
     });
@@ -318,7 +320,7 @@ function selectWinner() {
         console.log($(this))
         let selected_text = $(this).children("p")[0].innerText;
         let winner = $(this).children("p")[1].innerText;
-        $("#all-captions-final .card__face--back").css("border", "3px solid black")
+        $("#all-captions-final .card__face--back").css("border", "3px solid purple")
         $(this).css("border", "3px solid green");
         $("#winner-caption").val(selected_text);
         $("#winner-name").val(winner);
