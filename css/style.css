@@ -1,3 +1,7 @@
+/* ---------------------------------------- */
+/* ---------------- GENERAL --------------- */
+/* ---------------------------------------- */
+
 html, body {
   padding: 0;
   margin: 0;
@@ -41,8 +45,6 @@ a {
   text-decoration: none;
 }
 
-
-
 li {
   font-size: 1.05rem;
   color: black;
@@ -63,6 +65,7 @@ h2 {
 .container-center > * {
   margin: 50px;
 }
+
 
 
 /* ---------------------------------------- */
@@ -186,6 +189,8 @@ input[type=number]::-webkit-outer-spin-button {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
 
 
 /* ---------------------------------------- */
@@ -387,7 +392,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 /* ---------------------------------------- */
-/* ----------- DISTRIBUTION PAGE ---------- */
+/* ------------ START GAME PAGE ----------- */
 /* ---------------------------------------- */
 
 .header {
@@ -614,6 +619,8 @@ input[type=number]::-webkit-outer-spin-button {
   font-weight: bold;
 }
 
+
+
 /* ---------------------------------------- */
 /* -------------- JUDGE PAGE -------------- */
 /* ---------------------------------------- */
@@ -747,7 +754,7 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: 30px;
   font-size: 1.3em;
 }
-/*-----*/
+
 #choose-winner {
   display: flex;
   justify-content: center;
@@ -773,12 +780,23 @@ input[type=number]::-webkit-outer-spin-button {
   transform: translate(-50%, -50%);
    /* Negative half of height. */
   box-shadow: 0 0 10px grey;
-  padding: 20px;
 }
 
-#show-winner-div p {
-  font-size: 1.1em;
+#show-winner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+#show-winner p {
+  font-size: 1em;
   text-align: center;
+  margin: 20px;
+}
+
+#show-winner img {
+  height: 20vh;
 }
 
 #next-round {
@@ -900,10 +918,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
-
-
-
-
 .breathing {
   margin: 0;
   width: 440px;
@@ -924,7 +938,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 
-/*----------- CARDS --------------*/
+/* ---------------------------------------- */
+/* ------------ CARD CONTAINER ------------ */
+/* ---------------------------------------- */
 
 .scene {
   display: inline-block;
@@ -985,8 +1001,6 @@ input[type=number]::-webkit-outer-spin-button {
   box-shadow: 0 0 5px grey;
 }
 
-
-
 .center {
   display: flex;
   justify-content: center;
@@ -998,8 +1012,6 @@ input[type=number]::-webkit-outer-spin-button {
   flex-direction: column;
   justify-content: space-evenly;
 }
-
-/*----------------*/
 
 .context {
   width: 100%;
@@ -1014,14 +1026,12 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 50px;
 }
 
-
 .area{
   background: #4e54c8;
   background: -webkit-linear-gradient(to left, #8f94fb, #4e54c8);
   width: 100%;
   height:100vh;
 }
-
 
 .circles{
   position: absolute;
@@ -1041,7 +1051,6 @@ input[type=number]::-webkit-outer-spin-button {
   background: rgba(255, 255, 255, 0.2);
   animation: animate 25s linear infinite;
   bottom: -150px;
-
 }
 
 .circles li:nth-child(1){
@@ -1120,18 +1129,130 @@ input[type=number]::-webkit-outer-spin-button {
   animation-duration: 11s;
 }
 
+/* ---------------------------------------- */
+/* -------------- NEXT ROUND -------------- */
+/* ---------------------------------------- */
 
 
 
+/* ---------------------------------------- */
+/* ---------------- END PAGE -------------- */
+/* ---------------------------------------- */
+.memes-overview {
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  overflow-x: scroll;
+}
+
+.final-winners {
+  width: 500px;
+  height: 500px;
+  padding: 20px;
+  box-shadow: 0 0 5px grey;
+}
+
+.final-winners img {
+  width: 100%;
+}
 
 
+#amount-round-div {
+  height: 50vh;
+  width: 50vw;
+  border-radius: 10px;
+  border: 2px solid grey;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index:1;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px grey;
+  padding: 20px;
+}
+
+#amount-round-div form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#amount-round-div form input {
+  height: 5vh;
+  width: 5vw;
+  text-align: center;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid black;
+}
+
+#amount-round-div form button {
+    width: 100%;
+  height: 7vh;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+}
 
 
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
 
+/* Mouse-over effects */
+.slider:hover {
+  opacity: 1; /* Fully shown on mouse-over */
+}
 
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
 
+.slider::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: #04AA6D; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
 
+.winner-div {
+  width: 100vw;
+  height: 100px;
+  display: flex;
+  background-color: #2f2786;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 50px;
+}
 
+.winner-avatar {
+  height: 100%;
+}
+
+.hidden {
+  display: none;
+}
 
 
 
@@ -1194,93 +1315,3 @@ input[type=number]::-webkit-outer-spin-button {
 .navbar-active {
   background-color: #f4f3fb !important;
 }
-
-/* OVERVIEW GAME */
-.memes-overview {
-  width: 500px;
-  height: 500px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  overflow-x: scroll;
-}
-
-.final-winners {
-  width: 500px;
-  height: 500px;
-  padding: 20px;
-  box-shadow: 0 0 5px grey;
-}
-
-.final-winners img {
-  width: 100%;
-}
-
-
-#amount-round-div {
-  height: 50vh;
-  width: 50vw;
-  border-radius: 10px;
-  border: 2px solid grey;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
-  z-index:1;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 10px grey;
-  padding: 20px;
-}
-
-.slider {
-  -webkit-appearance: none;  /* Override default CSS styles */
-  appearance: none;
-  width: 100%; /* Full-width */
-  height: 25px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-  transition: opacity .2s;
-}
-
-/* Mouse-over effects */
-.slider:hover {
-  opacity: 1; /* Fully shown on mouse-over */
-}
-
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
-  appearance: none;
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: #04AA6D; /* Green background */
-  cursor: pointer; /* Cursor on hover */
-}
-
-.slider::-moz-range-thumb {
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: #04AA6D; /* Green background */
-  cursor: pointer; /* Cursor on hover */
-}
-
-.winner-div {
-  width: 100vw;
-  height: 100px;
-  display: flex;
-  background-color: #2f2786;
-  justify-content: space-between;
-  align-items: center;
-  padding-right: 50px;
-}
-
-.winner-avatar {
-  height: 100%;
-}
-

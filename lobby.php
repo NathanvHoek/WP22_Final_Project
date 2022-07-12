@@ -30,7 +30,7 @@ include "tpl/components/header.php";
     </div>
 
     <!--    Hidden box with avatars -->
-    <div id="avatar-box" class="avatar-select card-body" >
+    <div id="avatar-box" class="avatar-select card-body">
         <div id="avatar-overview">
             <?php
             $avatar_dir = "./media/avatars/*";
@@ -52,9 +52,9 @@ include "tpl/components/header.php";
         <div class="player-overview">
             <?php
             $json_file = file_get_contents("data/game/game_data.json");
-            $all_games = json_decode($json_file, true);
+            $game_data = json_decode($json_file, true);
 
-            $players = $all_games[$game_PIN]["player_data"];
+            $players = $game_data[$game_PIN]["player_data"];
 
             foreach ($players as $player => $player_info) {
                 $avatar = $player_info["player_avatar"];
@@ -68,15 +68,26 @@ include "tpl/components/header.php";
     </div>
 </div>
 
-<div id="amount-round-div" hidden>
-    <h3>How many rounds do you want to play?</h3>
-    <p>Every player is judge: <span class="range-slider__value">1</span> times.</p>
-    <input id="rangeSlider" class="slider range-slider__slider" type="range" value="1" min="1" max="5">
-    <p>That means you will play <span class="range-slider__rounds"></span> rounds</p>
-    <form action="start_game.php" method="post">
-        <input type="text" name="total_rounds" id="total_rounds" hidden>
-        <button type="submit">Start the game</button>
-    </form>
+<div id="amount-round-div">
+    <div id="round-data">
+        <?php
+        $decider = array_keys($game_data[$game_PIN]["status"])[0];
+        if ($decider == $_SESSION["username"]){
+            echo "<h3>How many rounds do you want to play?</h3>";
+            $count_players = count($game_data[$game_PIN]["player_data"]);
+            echo "<p>There are $count_players, every player should be the judge for this many times:</p>";
+
+            echo "<form action='start_game.php' method='post' id='start-game-form'>";
+            echo "<input type='number' name='timesJudge' id='timesJudge' max='5' min='1' value='1'>";
+            echo "<button type='submit'>Start the game</button>";
+        } else {
+            echo "<h3>$decider has clicked the continue button and decides how many rounds there will be played</h3>";
+            echo "<form action='start_game.php' method='post' id='start-game-form' hidden>";
+        }
+        echo "</form>";
+        ?>
+    </div>
+
 </div>
 
 <?php

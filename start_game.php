@@ -29,11 +29,13 @@ include "tpl/structure/start.php";
     $json_file_players = file_get_contents("data/game/game_data.json");
     $games = json_decode($json_file_players, true);
     $status = $games[$_SESSION["game_PIN"]]["status"];
+    $key = array_keys($games[$_SESSION["game_PIN"]]["status"])[0];
 
-    if ($games[$_SESSION["game_PIN"]]["status"] == "inactive") {
+    if ($games[$_SESSION["game_PIN"]]["status"][$key] == "continued") {
         // Change status to active (other players won't overwrite the distribution when their script is called)
         $games[$_SESSION["game_PIN"]]["status"] = "active";
-        $games[$_SESSION["game_PIN"]]["round"]["max_rounds"] = intval($_POST["total_rounds"]);
+        $total_rounds = $_POST["timesJudge"] * count($games[$_SESSION["game_PIN"]]["player_data"]);
+        $games[$_SESSION["game_PIN"]]["round"]["max_rounds"] = $total_rounds;
 
         // Open images file
         $json_file_cap = file_get_contents("data/content/captions.json");

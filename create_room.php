@@ -17,7 +17,7 @@ if (empty($_POST["join-code"])){
     $game_data = json_decode($json_file, true);
 
     $game_data[$game_PIN] = [
-        "status" => "inactive",
+        "status" => ["" => "inactive"],
         "player_data" => [],
         "judge" => [
             "all_players" => [],

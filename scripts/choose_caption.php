@@ -5,9 +5,9 @@ if (!empty($_POST['caption'])) {
     $game_data = json_decode($json_file, true);
 
     $round = $game_data[$_POST["code"]]["round"]["number"];
-    $game_data[$_POST["code"]]["round"]["round_info"][$round]["submitted"] = [$_POST["name"] =>
+    $game_data[$_POST["code"]]["round"]["round_info"][$round]["submitted"][$_POST["name"]] =
         ["caption" => $_POST["caption"],
-    "status" => "closed"]];
+    "status" => "closed"];
 
     // Save to external file
     $json_file = fopen('../data/game/game_data.json', 'w');

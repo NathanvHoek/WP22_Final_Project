@@ -14,7 +14,11 @@ if ($_SESSION["round"] == $max_round) {
     $winner = key($game_data[$game_PIN]["round"]["round_info"][$_SESSION["round"]]["winner"]);
     $game_data[$game_PIN]["player_data"][$winner]["score"] = $game_data[$game_PIN]["player_data"][$winner]["score"] + 1;
     echo "That was the game!";
+    $game_data[$game_PIN]["round"]["round_info"][$_SESSION["round"]]["round_status"] = "finished";
     header("refresh:3; url= end_game.php");
+    $json_file = fopen('data/game/game_data.json', 'w');
+    fwrite($json_file, json_encode($game_data));
+    fclose($json_file);
     die();
 }
 

@@ -4,8 +4,8 @@
 function checkPIN() {
     let PIN = $("#join-code").val();
     let room_exists = false;
-    $.getJSON("data/game/game_data.json", function (json) {
-        if (json[PIN] && json[PIN]["status"] === "inactive") {
+    $.getJSON("./data/game/game_data.json", function (json) {
+        if (json[PIN] && json[PIN]["status"][""] === "inactive") {
             room_exists = true;
         }
         toggleJoinButton(room_exists)
@@ -22,37 +22,15 @@ function toggleJoinButton(room_exists) {
 }
 
 
+
 //////////////////////////////////////////////////////////////////
 /////////////////////////// LOBBY PAGE ///////////////////////////
 //////////////////////////////////////////////////////////////////
-
-function slider() {
-    let slider = document.getElementById("rangeSlider");
-    let outputEl = document.querySelector(".range-slider__value");
-    let outputRounds = document.querySelector(".range-slider__rounds");
-    let formoutput = document.getElementById("total_rounds");
-    let PIN = $("#game-pin").val()
-    outputEl.textContent = slider.value;
-
-    $.getJSON("./data/game/game_data.json", function (json) {
-        let amount_players = Object.keys(json[PIN]["player_data"]).length;
-        outputRounds.textContent = amount_players;
-        formoutput.value = amount_players;
-
-        slider.oninput = function () {
-            outputEl.textContent = this.value;
-            let total_rounds = parseInt(this.value) * amount_players;
-            outputRounds.textContent = total_rounds.toString();
-            formoutput.value = total_rounds.toString();
-    }})
-    };
-
 
 function checkPlayerInput(){
     let PIN = $("#game-pin").val();
     let username = $("#username-input").val();
     let avatar = $("#avatar-input").val();
-    console.log(PIN)
     $.getJSON("./data/game/game_data.json", function (json) {
         if (
             (username !== "") &&
@@ -60,16 +38,16 @@ function checkPlayerInput(){
             (!json[PIN]["player_data"][username]) &&
             (avatar !== "empty")
             ){
+            console.log("YAYYYY")
             $("#join-game").attr("disabled", false);
-            console.log("YAYYY OMGGG")
         } else {
+            console.log("NOOOOO")
             $("#join-game").attr("disabled", true);
-            console.log("BUT WHYY")
         }
     })
 }
 
-function startGameMinimumPlayers(){
+function continueGameMinimumPlayers(){
     setInterval(function () {
         let PIN = $("#game-pin").val();
         $.getJSON("./data/game/game_data.json", function (json) {
@@ -82,14 +60,50 @@ function startGameMinimumPlayers(){
     }, 2000)
 }
 
-function openRound() {
+function openRoundDiv() {
+    $("#amount-round-div").hide()
     $("#start-game").click(function () {
-        $("#amount-round-div").show();
+        let formData = {
+            username: $("#username").val(),
+            PIN: $("#game-pin").val()
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "./scripts/continue_game.php",
+            data: formData,
+            dataType: "json",
+            encode: true,
+            success: function () {
+            setTimeout(function () {
+                $("#amount-round-div").load(location.href + " #round-data")
+            }, 400);
+            $("#amount-round-div").show()}
+        })
     })
+}
+
+function syncRoundDiv(){
+    let PIN = $("#game-pin").val();
+    let roundSync = setInterval( function() {
+        $.getJSON("./data/game/game_data.json", function (json) {
+            let initiator = Object.keys(json[PIN]["status"])[0];
+            let state = json[PIN]["status"][initiator];
+            if (state === "continued" && initiator !== ""){
+                $("#amount-round-div").load(location.href + " #round-data")
+                $("#amount-round-div").show()
+                $("#start-game").attr("disabled", true);
+                clearInterval(roundSync)
+            }
+        })
+    }
+    , 1000)
+
 }
 
 // Selecting avatar
 function showAvatarsIcon(){
+    $("#avatar-box").hide();
     $("#choose-avatar-btn").click(function () {
         $("#avatar-box").show();
     });
@@ -121,15 +135,7 @@ function selectButtonAvatar() {
 
 
 function hideForm(){
-    let PIN = $("#game-pin-lobby").val();
-    $("#welcome-player").hide()
     $("#join-game").click(function (){
-        $.getJSON("./data/game/game_data.json", function (json) {
-            console.log(json[PIN]["player_data"])
-            if (json[PIN]["player_data"].length < 1){
-                $("#start-game").attr("disabled", false);
-            }
-    })
         $("#player-form").hide()
     })
 }
@@ -137,6 +143,8 @@ function hideForm(){
 
 function submitPlayerForm(){
     $("#join-game").click(function (event) {
+            $("#username").val($("#username-input").val())
+
             let formData = {
                 room_PIN: $("#room-pin").val(),
                 username: $("#username-input").val(),
@@ -347,12 +355,13 @@ function submitWinner() {
 //////////////////////////////////////////////////////////////////
 function selectImage() {
         $(".card-container-overview .card").click(function () {
-            if ($(".announce").length === 0){let selected_text = $(this).children("p")[0].innerText;
-            $(".card-container-overview .card").css("border", "3px solid purple")
-            $(this).css("border", "3px solid green");
-            $("#selected-caption").text(selected_text);
-            $("#selected-caption-input").val(selected_text)
-            $("#submit-caption").show();
+            if ($(".wait-judge").length === 0) {
+                let selected_text = $(this).children("p")[0].innerText;
+                $(".card-container-overview .card").css("border", "3px solid purple")
+                $(this).css("border", "3px solid green");
+                $("#selected-caption").text(selected_text);
+                $("#selected-caption-input").val(selected_text)
+                $("#submit-caption").show();
         }})
 }
 
@@ -434,7 +443,6 @@ function nextRound(){
                 let PIN = $("#game-pin").val();
                 let round = $("#round-num").val();
                 let round_status = json[PIN]["round"]["round_info"][round]["round_status"];
-                console.log(round_status)
                 if (round_status === "finished"){
                     $("#next-round").submit()
                 }
@@ -454,42 +462,46 @@ $(function () {
         checkPIN();
     })
 
-
-    // THE LOBBY PAGE
-    closeButtonAvatar()
-    selectButtonAvatar()
-
-    $("#username-input").keyup(function () {
-        checkPlayerInput()
-    });
-
-    $("#cancel-submit button").click(function () {
-        checkPlayerInput()
-    })
-
-    startGameMinimumPlayers()
-
-
+    // All function to be used in the lobby
     if (window.location.href.endsWith("lobby.php")){
+        openRoundDiv()
+        closeButtonAvatar()
+        selectButtonAvatar()
+        showAvatarsIcon()
+        chooseAvatar()
         setInterval(function () {
                 $(".player-overview-div").load(window.location.href + " .player-overview")}
             , 1000);
 
         setInterval(function () {
-                $.getJSON("data/game/game_data.json", function (json) {
-                    let PIN = $("#join-code").val();
+                $.getJSON("./data/game/game_data.json", function (json) {
+                    let PIN = $("#game-pin").val();
+                    // let key = Object.keys(json[PIN]["status"])[0]
                     if (json[PIN]["status"] === "active") {
                         $("#start-game-form").submit();
                     }
                 })}
             , 500);
+
+
+
+        copyToClipboard()
+        submitPlayerForm()
+
+        $("#username-input").keyup(function () {
+            checkPlayerInput()
+        });
+
+        $("#cancel-submit button").click(function () {
+            checkPlayerInput()
+        });
+
+        syncRoundDiv()
+        continueGameMinimumPlayers()
+
     }
 
-    submitPlayerForm()
 
-    $("#avatar-box").hide()
-    showAvatarsIcon()
-    chooseAvatar()
 
     setInterval(function () {
             $("#chosen-image").load(window.location.href + " #chosen-image")}
@@ -500,6 +512,12 @@ $(function () {
 
 
     // JUDGE PAGE
+    if (window.location.href.endsWith("game.php")){
+        sync_winner()
+        sync_cards()
+        nextRound()
+    }
+
     switchTabs()
     chooseMainImage()
     submitMainImage()
@@ -514,15 +532,12 @@ $(function () {
     selectImage()
     submitImage()
 
-    sync_winner()
+
     // Sync cards
-    sync_cards()
+
     $("#judge-overview").hide()
-    nextRound()
+
     hideForm()
-    copyToClipboard()
+
     uploadImage()
-    slider()
-    $("#amount-round-div").hide()
-    openRound()
 })
