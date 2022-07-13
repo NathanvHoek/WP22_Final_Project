@@ -11,7 +11,3 @@ creating your own outrageously funny meme combinations. It’s the perfect excus
 
 This project is made possible by:
 > Tariq Ballout, Nathan van Hoek and Simon van Loon
-
-### eventuele install requirements 
-
-bla bla bla bla bla
